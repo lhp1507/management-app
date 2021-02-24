@@ -123,6 +123,9 @@ export default {
       var RetiredEmployee = this.ListOfRetiredEmployees.findIndex(
         (u) => u.username == username && u.password == password
       );
+
+      console.log(this.ListOfRetiredEmployees, "this.ListOfRetiredEmployees");
+
       if (!username && !password) {
         this.error = 1;
       } else if (RetiredEmployee == -1) {
