@@ -1,17 +1,6 @@
 <template>
   <div class="list-container">
-    <b-row no-gutters class="pl-3 pr-3 align-items-center mb-4">
-      <b-col class="col-6" style="font-size: 2rem">Danh sách sản phẩm</b-col>
-      <b-col class="col-6 d-flex justify-content-end">
-        <button
-          v-if="isAdmin == 'true'"
-          class="btn btn-success d-block w-auto"
-          @click="handleCreate"
-        >
-          Tạo sản phẩm
-        </button>
-      </b-col>
-    </b-row>
+    <v-list-header msg="sản phẩm" :handleCreate="handleCreate"> </v-list-header>
 
     <b-row no-gutters class="pl-3 pr-3">
       <b-col class="page-size col-2">
@@ -110,9 +99,13 @@
 </template>
 
 <script>
+import ListHeader from "./ListHeader.vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
+  components: {
+    "v-list-header": ListHeader,
+  },
   data() {
     return {
       // Per page

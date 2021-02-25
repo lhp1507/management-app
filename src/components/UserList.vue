@@ -1,13 +1,7 @@
 <template>
   <div class="list-container">
-    <b-row no-gutters class="pl-3 pr-3 align-items-center mb-4">
-      <b-col class="col-6" style="font-size: 2rem">Danh sách người dùng</b-col>
-      <b-col class="col-6 d-flex justify-content-end">
-        <button class="btn btn-success d-block w-auto" @click="handleCreate">
-          Tạo người dùng
-        </button>
-      </b-col>
-    </b-row>
+    <v-list-header msg="người dùng" :handleCreate="handleCreate">
+    </v-list-header>
 
     <b-row no-gutters class="pl-3 pr-3">
       <b-col class="page-size col-2">
@@ -45,39 +39,7 @@
       </b-col>
     </b-row>
 
-    <b-row no-gutters class="user-table mt-3" ref="btable">
-      <b-table
-        :items="getUsers"
-        :fields="fields"
-        :current-page="currentPage"
-        :per-page="perPage"
-        stacked="md"
-        show-empty
-        head-variant="light"
-        :filter="filter"
-        :filter-included-fields="filterOn"
-        @filtered="onFiltered"
-      >
-        <template #cell(fullname)="data">
-          {{ data.item.firstname }} {{ data.item.lastname }}
-        </template>
-        <template #cell(status)="data">
-          <div v-if="data.item.status == 1">Đang làm</div>
-          <div v-else>Nghỉ việc</div>
-        </template>
-
-        <template #cell(actions)="data">
-          <div class="align-btn text-right mr-lg-4">
-            <button
-              @click="handleEdit(data.item)"
-              class="btn p-0 bg-transparent border-0"
-            >
-              <font-awesome-icon icon="edit" class="text-success" />
-            </button>
-          </div>
-        </template>
-      </b-table>
-    </b-row>
+    <v-list-main></v-list-main>
 
     <b-row no-gutters class="page-nav pr-3">
       <b-col class="col-3 pl-lg-3" align-self="center">
@@ -98,9 +60,15 @@
 </template>
 
 <script>
+import ListHeader from "./ListHeader.vue";
+import ListMain from "./ListMain.vue";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
+  components: {
+    "v-list-header": ListHeader,
+    "v-list-main": ListMain,
+  },
   data() {
     return {
       // Per page

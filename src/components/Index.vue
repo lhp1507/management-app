@@ -43,7 +43,7 @@
       </b-col>
 
       <b-col>
-        <b-row no-gutters class="fixed-top col-lg-10 p-0 row-navbar">
+        <b-row no-gutters class="sticky-top">
           <b-navbar
             type="light"
             variant="white"
@@ -141,12 +141,8 @@ export default {
 .navbar-nav {
   align-items: center;
 }
-.row-navbar {
-  left: 100%;
-  transform: translate(-100%, 0%);
-}
+
 .row-list {
-  margin-top: 56px;
   padding: 2rem;
   .row-list-wrapper {
     width: 100%;
