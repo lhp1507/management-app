@@ -98,13 +98,6 @@ export default {
       required,
     },
   },
-  created() {
-    console.log(
-      "admin: kfc-kfc123-",
-      "\nuser: bong-bong123-Dang lam",
-      "\nuser: haicoi-123456-Nghi viec"
-    );
-  },
 
   computed: {
     ...mapState(["users"]),
@@ -123,8 +116,6 @@ export default {
       var RetiredEmployee = this.ListOfRetiredEmployees.findIndex(
         (u) => u.username == username && u.password == password
       );
-
-      console.log(this.ListOfRetiredEmployees, "this.ListOfRetiredEmployees");
 
       if (!username && !password) {
         this.error = 1;

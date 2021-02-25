@@ -2,7 +2,7 @@
   <div>
     <b-row no-gutters class="user-table mt-3" ref="btable">
       <b-table
-        :items="getUsers"
+        :items="getList"
         :fields="fields"
         :current-page="currentPage"
         :per-page="perPage"
@@ -17,8 +17,8 @@
           {{ data.item.firstname }} {{ data.item.lastname }}
         </template>
         <template #cell(status)="data">
-          <div v-if="data.item.status == 1">Đang làm</div>
-          <div v-else>Nghỉ việc</div>
+          <div v-if="data.item.status == 1">{{ msgActive }}</div>
+          <div v-else>{{ msgDisactive }}</div>
         </template>
 
         <template #cell(actions)="data">
@@ -43,8 +43,44 @@ export default {
       type: Function,
       required: true,
     },
-    msg: {
+    msgActive: {
       type: String,
+      required: true,
+    },
+    msgDisactive: {
+      type: String,
+      required: true,
+    },
+    getList: {
+      type: Array,
+      required: true,
+    },
+    fields: {
+      type: Array,
+      required: true,
+    },
+    perPage: {
+      type: Number,
+      required: true,
+    },
+    pageOptions: {
+      type: Array,
+      required: true,
+    },
+    currentPage: {
+      type: Number,
+      required: true,
+    },
+    filter: {
+      type: String,
+      required: true,
+    },
+    filterOn: {
+      type: Array,
+      required: true,
+    },
+    onFiltered: {
+      type: Function,
       required: true,
     },
   },

@@ -38,47 +38,19 @@
       </b-col>
     </b-row>
 
-    <b-row no-gutters class="product-table mt-3" ref="btable">
-      <b-table
-        :items="getProducts"
-        :fields="visibleFields"
-        :current-page="currentPage"
-        :per-page="perPage"
-        stacked="md"
-        show-empty
-        head-variant="light"
-        :filter="filter"
-        :filter-included-fields="filterOn"
-        @filtered="onFiltered"
-      >
-        <template #cell(productname)="data">
-          {{ data.item.productname }}
-        </template>
-
-        <template #cell(price)="data">
-          {{ Number(data.item.price).toLocaleString() }}
-          <!--
-            before: 10000
-            after:  10,000
-           -->
-        </template>
-        <template #cell(status)="data">
-          <div v-if="data.item.status == 1">Hoạt động</div>
-          <div v-else>Không hoạt động</div>
-        </template>
-
-        <template #cell(actions)="row">
-          <div class="align-btn text-right mr-lg-4">
-            <button
-              @click="handleEdit(row.item)"
-              class="btn p-0 bg-transparent border-0"
-            >
-              <font-awesome-icon icon="edit" class="text-success" />
-            </button>
-          </div>
-        </template>
-      </b-table>
-    </b-row>
+    <v-list-main
+      msgActive="Hoạt động"
+      msgDisactive="Không hoạt động"
+      :handleEdit="handleEdit"
+      :getList="getProducts"
+      :fields="fields"
+      :currentPage="currentPage"
+      :filter="filter"
+      :filterOn="filterOn"
+      :onFiltered="onFiltered"
+      :pageOptions="pageOptions"
+      :perPage="perPage"
+    ></v-list-main>
 
     <b-row no-gutters class="page-nav pr-3">
       <b-col class="col-3 pl-lg-3" align-self="center">
@@ -100,11 +72,13 @@
 
 <script>
 import ListHeader from "./ListHeader.vue";
+import ListMain from "./ListMain.vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
     "v-list-header": ListHeader,
+    "v-list-main": ListMain,
   },
   data() {
     return {
