@@ -13,11 +13,11 @@
           v-model="form.username"
           placeholder="Nhập tên đăng nhập"
           autocomplete="off"
-          :disabled="getIsEdit == true"
+          :disabled="isEdit == 'true'"
           required
         ></b-form-input>
         <div
-          v-if="isExisted && !getIsEdit"
+          v-if="isExisted && isEdit == 'false'"
           class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
         >
           Tên đăng nhập này đã được sử dụng.
@@ -68,7 +68,7 @@
 
       <div class="button-group text-right">
         <b-button
-          v-if="getIsEdit == false"
+          v-if="isEdit == 'false'"
           type="submit"
           variant="success"
           style="width: 100px"
@@ -95,42 +95,69 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   data() {
     return {
-      form: {
-        username: null,
-        firstname: null,
-        lastname: null,
-        status: 0,
-      },
+      form: {},
       show: true,
       isExisted: false,
     };
   },
   computed: {
-    ...mapGetters(["getIsEdit", "getEditingUser"]),
     ...mapState(["editingUserIndex", "users"]),
+
+    getEditingUserByID() {
+      if (this.isEdit == "true") {
+        return this.users.find(
+          (user) => user.id === parseInt(this.$route.params.id)
+        );
+      } else return {};
+    },
   },
+  beforeCreate() {
+    this.isEdit = sessionStorage.getItem("isEdit");
+    console.log("beforeCreate", this.isEdit);
+  },
+
   created() {
-    if (this.getIsEdit) {
-      this.form = Object.assign({}, this.getEditingUser);
+    console.log(
+      "created",
+      this.isEdit,
+      this.getEditingUserByID,
+      this.getEditingUserByID.id
+    );
+    if (this.isEdit == "true") {
+      this.form = this.getEditingUserByID;
+      // this.form = Object.assign({}, this.getEditingUserByID);
     }
+    console.log("form", this.form, this.form.id);
   },
 
   watch: {
-    getEditingUser(newData) {
-      if (this.getIsEdit) {
+    getEditingUserByID(newData, oldData) {
+      console.log(oldData, newData);
+      if (this.isEdit == "true") {
         this.form = newData;
         sessionStorage.setItem("UserForm", JSON.stringify(this.form));
       }
     },
+
+    // getEditingUser(newData) {
+    //   if (this.isEdit == 'true') {
+    //     this.form = newData;
+    //     sessionStorage.setItem("UserForm", JSON.stringify(this.form));
+    //   }
+    // },
   },
 
   methods: {
-    ...mapMutations(["setEditingUser", "addNewOneToUsers", "GoBackOnCancel"]),
+    ...mapMutations([
+      "setEditingUser",
+      "addNewOneToUsers",
+      "setEditStateToFalse",
+    ]),
 
     onSubmit(e) {
       e.preventDefault();
@@ -142,15 +169,15 @@ export default {
         this.isExisted = false;
       } else this.isExisted = true;
 
-      if (this.getIsEdit) {
-        // console.log(this.getIsEdit, "Edit");
+      if (this.isEdit == "true") {
+        // console.log(this.isEdit, "Edit");
         this.setEditingUser({
           index: this.editingUserIndex,
           user: this.form,
         });
         this.$router.push("/user");
       } else if (this.isExisted === false) {
-        // console.log(this.getIsEdit, "Create");
+        // console.log(this.isEdit, "Create");
         this.addNewOneToUsers({
           firstname: this.form.firstname,
           lastname: this.form.lastname,
@@ -159,11 +186,12 @@ export default {
         });
         this.$router.push("/user");
       }
+
+      this.setEditStateToFalse();
     },
 
     onCancel() {
-      // console.log("cancel clicked.");
-      this.GoBackOnCancel();
+      this.setEditStateToFalse();
       this.$router.back();
     },
   },

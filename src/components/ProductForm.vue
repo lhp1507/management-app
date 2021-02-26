@@ -13,11 +13,11 @@
           v-model="form.productname"
           placeholder="Nhập tên sản phẩm"
           autocomplete="off"
-          :disabled="getIsEdit == true"
+          :disabled="isEdit == 'true'"
           required
         ></b-form-input>
         <div
-          v-if="isExisted && !getIsEdit"
+          v-if="isExisted && isEdit == 'false'"
           class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
         >
           Tên sản phẩm này đã được sử dụng.
@@ -53,7 +53,7 @@
 
       <div class="button-group text-right">
         <b-button
-          v-if="getIsEdit == false"
+          v-if="isEdit == 'false'"
           type="submit"
           variant="success"
           style="width: 100px"
@@ -81,35 +81,52 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   data() {
     return {
-      form: {
-        productname: null,
-        price: null,
-        status: 0,
-      },
+      form: {},
       show: true,
       isExisted: false,
     };
   },
 
   computed: {
-    ...mapGetters(["getIsEdit", "getEditingProduct"]),
     ...mapState(["editingProductIndex", "products"]),
+
+    getEditingProductByID() {
+      if (this.isEdit == "true") {
+        return this.products.find(
+          (product) => product.id === parseInt(this.$route.params.id)
+        );
+      } else return {};
+    },
+  },
+  beforeCreate() {
+    this.isEdit = sessionStorage.getItem("isEdit");
+    console.log("beforeCreate", this.isEdit);
   },
 
   created() {
-    if (this.getIsEdit) {
-      this.form = Object.assign({}, this.getEditingProduct);
+    console.log(
+      "created",
+      this.isEdit,
+      this.getEditingProductByID,
+      this.getEditingProductByID.id
+    );
+
+    if (this.isEdit == "true") {
+      this.form = this.getEditingProductByID;
+      // this.form = Object.assign({}, this.getEditingProductByID);
     }
+    console.log("form", this.form, this.form.id);
   },
 
   watch: {
-    getEditingProduct(newData) {
-      if (this.getIsEdit) {
+    getEditingProductByID(newData, oldData) {
+      console.log(oldData, newData);
+      if (this.isEdit == "true") {
         this.form = newData;
         sessionStorage.setItem("ProductForm", JSON.stringify(this.form));
       }
@@ -120,7 +137,7 @@ export default {
     ...mapMutations([
       "setEditingProduct",
       "addNewOneToProducts",
-      "GoBackOnCancel",
+      "setEditStateToFalse",
     ]),
 
     onSubmit(e) {
@@ -134,8 +151,8 @@ export default {
         this.isExisted = false;
       } else this.isExisted = true;
 
-      if (this.getIsEdit) {
-        // console.log(this.getIsEdit, "Edit");
+      if (this.isEdit == "true") {
+        // console.log(this.isEdit, "Edit");
         this.setEditingProduct({
           index: this.editingProductIndex,
           product: this.form,
@@ -150,10 +167,12 @@ export default {
         });
         this.$router.push("/product");
       }
+
+      this.setEditStateToFalse();
     },
     onCancel() {
       // console.log("cancel clicked.");
-      this.GoBackOnCancel();
+      this.setEditStateToFalse();
       this.$router.back();
     },
   },

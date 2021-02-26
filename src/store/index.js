@@ -451,10 +451,12 @@ export default new Vuex.Store({
     // Edit
     setEditStateToTrue(state) {
       state.isEdit = true;
+      sessionStorage.setItem("isEdit", state.isEdit);
     },
     // Create
     setEditStateToFalse(state) {
       state.isEdit = false;
+      sessionStorage.setItem("isEdit", state.isEdit);
     },
 
     /** Product - handleEdit || handleCreate **/
@@ -496,27 +498,13 @@ export default new Vuex.Store({
         role: "user",
       });
     },
-
-    /** on cancle **/
-    GoBackOnCancel(state) {
-      state.isEdit = false;
-    },
   },
   getters: {
-    getIsEdit(state) {
-      return state.isEdit;
-    },
     getUsers(state) {
       return state.users;
     },
     getProducts(state) {
       return state.products;
-    },
-    getEditingProduct(state) {
-      return state.products[state.editingProductIndex];
-    },
-    getEditingUser(state) {
-      return state.users[state.editingUserIndex];
     },
   },
 });

@@ -5,7 +5,11 @@
         <slot name="list-title">Danh sách {{ msg }}</slot>
       </b-col>
       <b-col class="col-6 d-flex justify-content-end">
-        <button class="btn btn-success d-block w-auto" @click="handleCreate">
+        <button
+          class="btn btn-success w-auto"
+          @click="handleCreate"
+          :class="[isAdmin == 'true' ? 'd-block' : 'd-none']"
+        >
           <slot name="list-create-btn">Tạo {{ msg }}</slot>
         </button>
       </b-col>
@@ -21,6 +25,10 @@ export default {
       required: true,
     },
     msg: {
+      type: String,
+      required: true,
+    },
+    isAdmin: {
       type: String,
       required: true,
     },

@@ -1,6 +1,11 @@
 <template>
   <div class="list-container">
-    <v-list-header msg="sản phẩm" :handleCreate="handleCreate"> </v-list-header>
+    <v-list-header
+      msg="sản phẩm"
+      :handleCreate="handleCreate"
+      :isAdmin="isAdmin"
+    >
+    </v-list-header>
 
     <b-row no-gutters class="pl-3 pr-3">
       <b-col class="page-size col-2">
@@ -43,7 +48,7 @@
       msgDisactive="Không hoạt động"
       :handleEdit="handleEdit"
       :getList="getProducts"
-      :fields="fields"
+      :fields="visibleFields"
       :currentPage="currentPage"
       :filter="filter"
       :filterOn="filterOn"
