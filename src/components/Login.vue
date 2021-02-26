@@ -117,7 +117,7 @@ export default {
         (u) => u.username == username && u.password == password
       );
 
-      if (!username && !password) {
+      if (!username || !password) {
         this.error = 1;
       } else if (RetiredEmployee == -1) {
         this.error = 0;
