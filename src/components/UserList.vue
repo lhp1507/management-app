@@ -1,6 +1,10 @@
 <template>
   <div class="list-container">
-    <v-list-header msg="người dùng" :handleCreate="handleCreate">
+    <v-list-header
+      msg="người dùng"
+      :handleCreate="handleCreate"
+      :isAdmin="isAdmin"
+    >
     </v-list-header>
 
     <b-row no-gutters class="pl-3 pr-3">
@@ -105,6 +109,10 @@ export default {
   computed: {
     ...mapGetters(["getUsers"]),
     ...mapState(["users"]),
+    isAdmin() {
+      var isadmin = sessionStorage.getItem("IsAdmin");
+      return isadmin;
+    },
   },
   created() {
     this.fetchData();
