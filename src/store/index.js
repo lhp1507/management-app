@@ -10,30 +10,27 @@ export default new Vuex.Store({
       // status: 1 -> Đang làm, 0 -> Nghỉ việc
       {
         id: 1,
-        firstname: "Bong",
-        lastname: "Milktea",
+        fullname: { firstname: "Bong", lastname: "Milktea" },
         username: "bong",
-        password: "bong123",
+        password: "111111",
         datecreated: "10/02/2021, 3:52:52 PM",
         status: 1,
         role: "user",
       },
       {
         id: 2,
-        firstname: "Hai",
-        lastname: "Coi",
+        fullname: { firstname: "Hai", lastname: "Coi" },
         username: "haicoi",
-        password: "123456",
+        password: "111111",
         datecreated: "10/02/2021, 3:52:52 PM",
         status: 0,
         role: "user",
       },
       {
         id: 3,
-        firstname: "Kentucky",
-        lastname: "FC",
+        fullname: { firstname: "Kentucky", lastname: "FC" },
         username: "kfc",
-        password: "kfc123",
+        password: "111111",
         datecreated: "10/02/2021, 3:52:52 PM",
         status: 1,
         role: "admin",
@@ -489,11 +486,13 @@ export default new Vuex.Store({
     addNewOneToUsers(state, payload) {
       state.users.push({
         id: state.users.length + 1,
-        firstname: payload.firstname,
-        lastname: payload.lastname,
+        fullname: {
+          firstname: payload.firstname,
+          lastname: payload.lastname,
+        },
         username: payload.username,
         status: payload.status,
-        password: "123456",
+        password: "111111",
         datecreated: "17/02/2021, 0:25 AM",
         role: "user",
       });

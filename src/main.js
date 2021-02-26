@@ -11,10 +11,20 @@ import {
   faCaretDown,
   faUserCircle,
   faEdit,
+  faEye,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faCog, faCalculator, faCaretDown, faUserCircle, faEdit);
+library.add(
+  faCog,
+  faCalculator,
+  faCaretDown,
+  faUserCircle,
+  faEdit,
+  faEye,
+  faTrash
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Vuelidate);

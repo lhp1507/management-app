@@ -48,14 +48,38 @@
       msgDisactive="Nghỉ việc"
       :handleEdit="handleEdit"
       :getList="getUsers"
-      :fields="fields"
+      :fields="visibleFields"
       :currentPage="currentPage"
       :filter="filter"
       :filterOn="filterOn"
       :onFiltered="onFiltered"
       :pageOptions="pageOptions"
       :perPage="perPage"
-    ></v-list-main>
+    >
+      <!--  -->
+      <template #cell(abc)="data">
+        <b-button
+          size="sm"
+          @click="viewCurrent(data.item)"
+          class="mr-1"
+          variant="primary"
+        >
+          Info
+        </b-button>
+        <b-button
+          size="sm"
+          @click="handleEdit(data.item)"
+          class="mr-1"
+          variant="warning"
+        >
+          Edit
+        </b-button>
+        <b-button size="sm" @click="deleteCurrent(data.item)" variant="danger">
+          Delete
+        </b-button>
+      </template>
+      <!--  -->
+    </v-list-main>
 
     <b-row no-gutters class="page-nav pr-3">
       <b-col class="col-3 pl-lg-3" align-self="center">
@@ -92,11 +116,17 @@ export default {
       pageOptions: [20, 50, 100],
       // Header của table
       fields: [
-        { key: "fullname", label: "Tên đầy đủ" },
+        {
+          key: "fullname",
+          label: "Tên đầy đủ",
+          formatter: (value) => {
+            return `${value.firstname} ${value.lastname}`;
+          },
+        },
         { key: "username", label: "Tên đăng nhập" },
         { key: "datecreated", label: "Ngày được tạo" },
         { key: "status", label: "Trạng thái" },
-        { key: "actions", label: "Thao tác" },
+        { key: "abc", label: "Thao tác", visible: true },
       ],
       //
       totalRows: 1,
@@ -112,6 +142,13 @@ export default {
     isAdmin() {
       var isadmin = sessionStorage.getItem("IsAdmin");
       return isadmin;
+    },
+    visibleFields() {
+      if (this.isAdmin == "true") {
+        return this.fields;
+      } else {
+        return this.fields.filter((field) => !field.visible);
+      }
     },
   },
   created() {
@@ -160,6 +197,13 @@ export default {
         index: this.editingUserIndex,
         user: JSON.parse(sessionStorage.getItem("UserForm")),
       });
+    },
+
+    viewCurrent(editingUser) {
+      alert(JSON.stringify(editingUser));
+    },
+    deleteCurrent(editingUser) {
+      alert("delete " + editingUser.username);
     },
   },
 };

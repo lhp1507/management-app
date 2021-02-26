@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "../store/index.js";
 import Login from "../components/Login.vue";
 import Index from "../components/Index.vue";
 import UserList from "../components/UserList.vue";

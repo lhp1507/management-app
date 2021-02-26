@@ -32,7 +32,7 @@
       >
         <b-form-input
           id="input-firstname"
-          v-model="form.firstname"
+          v-model="form.fullname.firstname"
           placeholder="Nhập tên"
           autocomplete="off"
           required
@@ -47,7 +47,7 @@
       >
         <b-form-input
           id="input-lastname"
-          v-model="form.lastname"
+          v-model="form.fullname.lastname"
           placeholder="Nhập họ"
           autocomplete="off"
           required
@@ -100,7 +100,11 @@ import { mapMutations, mapState } from "vuex";
 export default {
   data() {
     return {
-      form: {},
+      form: {
+        fullname: { firstname: "", lastname: "" },
+        username: "",
+        status: 0,
+      },
       show: true,
       isExisted: false,
     };
@@ -118,26 +122,25 @@ export default {
   },
   beforeCreate() {
     this.isEdit = sessionStorage.getItem("isEdit");
-    console.log("beforeCreate", this.isEdit);
+    // console.log("beforeCreate", this.isEdit);
   },
 
   created() {
-    console.log(
-      "created",
-      this.isEdit,
-      this.getEditingUserByID,
-      this.getEditingUserByID.id
-    );
+    // console.log(
+    //   "created",
+    //   this.isEdit,
+    //   this.getEditingUserByID,
+    //   this.getEditingUserByID.id
+    // );
     if (this.isEdit == "true") {
-      this.form = this.getEditingUserByID;
-      // this.form = Object.assign({}, this.getEditingUserByID);
+      // this.form = this.getEditingUserByID;
+      this.form = Object.assign({}, this.getEditingUserByID);
     }
     console.log("form", this.form, this.form.id);
   },
 
   watch: {
-    getEditingUserByID(newData, oldData) {
-      console.log(oldData, newData);
+    getEditingUserByID(newData) {
       if (this.isEdit == "true") {
         this.form = newData;
         sessionStorage.setItem("UserForm", JSON.stringify(this.form));
@@ -179,8 +182,8 @@ export default {
       } else if (this.isExisted === false) {
         // console.log(this.isEdit, "Create");
         this.addNewOneToUsers({
-          firstname: this.form.firstname,
-          lastname: this.form.lastname,
+          firstname: this.form.fullname.firstname,
+          lastname: this.form.fullname.lastname,
           username: this.form.username,
           status: this.form.status,
         });

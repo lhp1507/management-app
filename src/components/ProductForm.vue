@@ -105,27 +105,26 @@ export default {
   },
   beforeCreate() {
     this.isEdit = sessionStorage.getItem("isEdit");
-    console.log("beforeCreate", this.isEdit);
+    // console.log("beforeCreate", this.isEdit);
   },
 
   created() {
-    console.log(
-      "created",
-      this.isEdit,
-      this.getEditingProductByID,
-      this.getEditingProductByID.id
-    );
+    // console.log(
+    //   "created",
+    //   this.isEdit,
+    //   this.getEditingProductByID,
+    //   this.getEditingProductByID.id
+    // );
 
     if (this.isEdit == "true") {
       this.form = this.getEditingProductByID;
       // this.form = Object.assign({}, this.getEditingProductByID);
     }
-    console.log("form", this.form, this.form.id);
+    // console.log("form", this.form, this.form.id);
   },
 
   watch: {
-    getEditingProductByID(newData, oldData) {
-      console.log(oldData, newData);
+    getEditingProductByID(newData) {
       if (this.isEdit == "true") {
         this.form = newData;
         sessionStorage.setItem("ProductForm", JSON.stringify(this.form));

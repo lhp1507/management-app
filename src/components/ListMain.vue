@@ -13,24 +13,28 @@
         :filter-included-fields="filterOn"
         @filtered="onFiltered"
       >
-        <template #cell(fullname)="data">
-          {{ data.item.firstname }} {{ data.item.lastname }}
-        </template>
         <template #cell(status)="data">
           <div v-if="data.item.status == 1">{{ msgActive }}</div>
           <div v-else>{{ msgDisactive }}</div>
         </template>
 
         <template #cell(actions)="data">
-          <div class="align-btn text-right mr-lg-4">
-            <button
-              @click="handleEdit(data.item)"
-              class="btn p-0 bg-transparent border-0"
-            >
-              <font-awesome-icon icon="edit" class="text-success" />
-            </button>
-          </div>
+          <slot name="cell(actions)" v-bind="data"></slot>
         </template>
+
+        <!-- <template #cell(actions)="data">
+          <div class="align-btn text-right mr-4">
+            <v-button
+              class="btn p-0 bg-transparent border-0"
+              :onClick="onClick(data.item)"
+              v-for="button in buttons"
+              :key="button.id"
+            >
+              <font-awesome-icon :icon="edit" class="text-success" />
+              <slot></slot>
+            </v-button>
+          </div>
+        </template> -->
       </b-table>
     </b-row>
   </div>
@@ -39,10 +43,6 @@
 <script>
 export default {
   props: {
-    handleEdit: {
-      type: Function,
-      required: true,
-    },
     msgActive: {
       type: String,
       required: true,

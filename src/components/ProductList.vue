@@ -55,7 +55,8 @@
       :onFiltered="onFiltered"
       :pageOptions="pageOptions"
       :perPage="perPage"
-    ></v-list-main>
+    >
+    </v-list-main>
 
     <b-row no-gutters class="page-nav pr-3">
       <b-col class="col-3 pl-lg-3" align-self="center">
