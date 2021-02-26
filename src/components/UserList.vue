@@ -57,7 +57,7 @@
       :perPage="perPage"
     >
       <!--  -->
-      <template #cell(abc)="data">
+      <template #cell(ac)="data">
         <b-button
           size="sm"
           @click="viewCurrent(data.item)"
@@ -126,7 +126,7 @@ export default {
         { key: "username", label: "Tên đăng nhập" },
         { key: "datecreated", label: "Ngày được tạo" },
         { key: "status", label: "Trạng thái" },
-        { key: "abc", label: "Thao tác", visible: true },
+        { key: "ac", label: "Thao tác", visible: true },
       ],
       //
       totalRows: 1,

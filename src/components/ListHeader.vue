@@ -2,7 +2,7 @@
   <div>
     <b-row no-gutters class="pl-3 pr-3 align-items-center mb-4">
       <b-col class="col-6" style="font-size: 2rem">
-        <slot name="list-title">Danh sách {{ msg }}</slot>
+        <slot name="list-title">{{ msg }}</slot>
       </b-col>
       <b-col class="col-6 d-flex justify-content-end">
         <button
@@ -10,7 +10,7 @@
           @click="handleCreate"
           :class="[isAdmin == 'true' ? 'd-block' : 'd-none']"
         >
-          <slot name="list-create-btn">Tạo {{ msg }}</slot>
+          <slot name="list-create-btn">{{ msg }}</slot>
         </button>
       </b-col>
     </b-row>
