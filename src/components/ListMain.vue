@@ -6,12 +6,12 @@
         :fields="fields"
         :current-page="currentPage"
         :per-page="perPage"
-        stacked="md"
-        show-empty
-        head-variant="light"
         :filter="filter"
         :filter-included-fields="filterOn"
         @filtered="onFiltered"
+        stacked="md"
+        show-empty
+        head-variant="light"
       >
         <template
           v-for="slotName in Object.keys($scopedSlots)"
@@ -37,10 +37,6 @@ export default {
     },
     perPage: {
       type: Number,
-      required: true,
-    },
-    pageOptions: {
-      type: Array,
       required: true,
     },
     currentPage: {

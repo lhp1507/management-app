@@ -1,7 +1,8 @@
 <template>
   <div class="form-container">
-    <b-form @submit="onSubmit" v-if="show">
-      <!-- Tên đăng nhập - username -->
+    <!-- <b-form @submit="onSubmit" v-if="show">
+
+
       <b-form-group
         id="input-group-username"
         label="Tên đăng nhập"
@@ -23,7 +24,7 @@
           Tên đăng nhập này đã được sử dụng.
         </div>
       </b-form-group>
-      <!-- Tên nhân viên - firstname -->
+
       <b-form-group
         id="input-group-firstname"
         label="Tên nhân viên"
@@ -38,7 +39,7 @@
           required
         ></b-form-input>
       </b-form-group>
-      <!-- Họ nhân viên - lastname -->
+
       <b-form-group
         id="input-group-lastname"
         label="Họ nhân viên"
@@ -91,7 +92,7 @@
           >Hủy</b-button
         >
       </div>
-    </b-form>
+    </b-form> -->
   </div>
 </template>
 <script>

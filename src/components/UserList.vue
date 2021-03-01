@@ -48,11 +48,11 @@
       :getList="getUsers"
       :fields="visibleFields"
       :currentPage="currentPage"
+      :perPage="perPage"
       :filter="filter"
       :filterOn="filterOn"
       :onFiltered="onFiltered"
-      :pageOptions="pageOptions"
-      :perPage="perPage"
+      pageOptions="pageOptions"
     >
       <!--  -->
       <template #cell(act)="data">

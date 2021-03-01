@@ -1,7 +1,8 @@
 <template>
   <div class="list-container">
     <v-list-header
-      msg="sản phẩm"
+      msgTitle="Danh sách sản phẩm"
+      msgBtn="Tạo sản phẩm"
       :handleCreate="handleCreate"
       :isAdmin="isAdmin"
     >
@@ -44,18 +45,38 @@
     </b-row>
 
     <v-list-main
-      msgActive="Hoạt động"
-      msgDisactive="Không hoạt động"
-      :handleEdit="handleEdit"
       :getList="getProducts"
       :fields="visibleFields"
       :currentPage="currentPage"
+      :perPage="perPage"
       :filter="filter"
       :filterOn="filterOn"
       :onFiltered="onFiltered"
-      :pageOptions="pageOptions"
-      :perPage="perPage"
+      pageOptions="pageOptions"
     >
+      <!--  -->
+      <template #cell(act)="data">
+        <b-button
+          size="sm"
+          @click="viewCurrent(data.item)"
+          class="mr-1"
+          variant="primary"
+        >
+          Info
+        </b-button>
+        <b-button
+          size="sm"
+          @click="handleEdit(data.item)"
+          class="mr-1"
+          variant="warning"
+        >
+          Edit
+        </b-button>
+        <b-button size="sm" @click="deleteCurrent(data.item)" variant="danger">
+          Delete
+        </b-button>
+      </template>
+      <!--  -->
     </v-list-main>
 
     <b-row no-gutters class="page-nav pr-3">
@@ -97,8 +118,15 @@ export default {
         { key: "datecreated", label: "Ngày được tạo" },
         { key: "datemodified", label: "Ngày cập nhật gần đây" },
         { key: "price", label: "Giá" },
-        { key: "status", label: "Trạng thái" },
-        { key: "actions", label: "Thao tác", visible: true },
+        {
+          key: "status",
+          label: "Trạng thái",
+          formatter: (value) => {
+            if (value === 1) return "Hoạt động";
+            else return "Không hoạt động";
+          },
+        },
+        { key: "act", label: "Thao tác", visible: true },
       ],
 
       totalRows: 1,
@@ -169,6 +197,13 @@ export default {
         index: this.editingProductIndex,
         product: JSON.parse(sessionStorage.getItem("ProductForm")),
       });
+    },
+
+    viewCurrent(editingUser) {
+      alert(JSON.stringify(editingUser));
+    },
+    deleteCurrent(editingUser) {
+      alert("delete " + editingUser.username);
     },
   },
 };
