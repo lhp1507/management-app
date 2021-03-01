@@ -27,14 +27,6 @@
 <script>
 export default {
   props: {
-    msgActive: {
-      type: String,
-      required: true,
-    },
-    msgDisactive: {
-      type: String,
-      required: true,
-    },
     getList: {
       type: Array,
       required: true,

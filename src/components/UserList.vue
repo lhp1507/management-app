@@ -1,7 +1,8 @@
 <template>
   <div class="list-container">
     <v-list-header
-      msg="người dùng"
+      msgTitle="Danh sách người dùng"
+      msgBtn="Tạo người dùng"
       :handleCreate="handleCreate"
       :isAdmin="isAdmin"
     >
@@ -44,9 +45,6 @@
     </b-row>
 
     <v-list-main
-      msgActive="Đang làm"
-      msgDisactive="Nghỉ việc"
-      :handleEdit="handleEdit"
       :getList="getUsers"
       :fields="visibleFields"
       :currentPage="currentPage"
@@ -57,7 +55,7 @@
       :perPage="perPage"
     >
       <!--  -->
-      <template #cell(ac)="data">
+      <template #cell(act)="data">
         <b-button
           size="sm"
           @click="viewCurrent(data.item)"
@@ -125,8 +123,15 @@ export default {
         },
         { key: "username", label: "Tên đăng nhập" },
         { key: "datecreated", label: "Ngày được tạo" },
-        { key: "status", label: "Trạng thái" },
-        { key: "ac", label: "Thao tác", visible: true },
+        {
+          key: "status",
+          label: "Trạng thái",
+          formatter: (value) => {
+            if (value === 1) return "Đang làm";
+            else return "Nghỉ việc";
+          },
+        },
+        { key: "act", label: "Thao tác", visible: true },
       ],
       //
       totalRows: 1,
