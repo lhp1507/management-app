@@ -1,8 +1,67 @@
 <template>
   <div class="form-container">
+    <!-- Component -->
+    <!-- username -->
+    <v-form
+      id="username"
+      label="Tên đăng nhập"
+      class="text-success font-weight-bold col-6 d-block pl-0"
+    >
+      <template slot="username">
+        <b-form-input
+          v-model="form.username"
+          placeholder="Nhập tên đăng nhập"
+          autocomplete="off"
+          required
+        ></b-form-input>
+      </template>
+    </v-form>
+    <!-- firstname -->
+    <v-form
+      id="firstname"
+      label="Tên nhân viên"
+      class="text-success font-weight-bold col-lg-6 d-block pl-0"
+    >
+      <template slot="firstname">
+        <b-form-input
+          v-model="form.fullname.firstname"
+          placeholder="Nhập tên"
+          autocomplete="off"
+          required
+        ></b-form-input>
+      </template>
+    </v-form>
+
+    <!-- lastname -->
+    <v-form
+      id="lastname"
+      label="Họ nhân viên"
+      class="text-success font-weight-bold col-lg-6 d-block pl-0"
+    >
+      <template slot="lastname">
+        <b-form-input
+          v-model="form.fullname.lastname"
+          placeholder="Nhập họ"
+          autocomplete="off"
+          required
+        ></b-form-input>
+      </template>
+    </v-form>
+
+    <!-- status -->
+    <v-form id="status">
+      <template slot="status">
+        <b-form-checkbox v-model="form.status" value="1" unchecked-value="0"
+          >Trạng thái</b-form-checkbox
+        >
+      </template>
+    </v-form>
+
+    <!-- Component -->
+
+    <b-button @click="showInfo" variant="primary">Info</b-button>
+
     <!-- <b-form @submit="onSubmit" v-if="show">
-
-
       <b-form-group
         id="input-group-username"
         label="Tên đăng nhập"
@@ -97,8 +156,10 @@
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
+import Form from "./Form.vue";
 
 export default {
+  components: { "v-form": Form },
   data() {
     return {
       form: {
@@ -108,6 +169,12 @@ export default {
       },
       show: true,
       isExisted: false,
+      //
+      // users: {
+      //   username: { id: "username", label: "Tên đăng nhập" },
+      //   firstname: { id: "firstname", label: "Tên nhân viên" },
+      //   lastname: { id: "lastname", label: "Họ nhân viên" },
+      // },
     };
   },
   computed: {
@@ -137,7 +204,9 @@ export default {
       // this.form = this.getEditingUserByID;
       this.form = Object.assign({}, this.getEditingUserByID);
     }
-    console.log("form", this.form, this.form.id);
+    // console.log("form");
+    // console.log(JSON.stringify(this.form));
+    // console.log(this.form.id);
   },
 
   watch: {
@@ -197,6 +266,11 @@ export default {
     onCancel() {
       this.setEditStateToFalse();
       this.$router.back();
+    },
+
+    //
+    showInfo() {
+      alert(JSON.stringify(this.form));
     },
   },
 };

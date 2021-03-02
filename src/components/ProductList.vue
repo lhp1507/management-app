@@ -117,7 +117,13 @@ export default {
         { key: "productname", label: "Tên sản phẩm" },
         { key: "datecreated", label: "Ngày được tạo" },
         { key: "datemodified", label: "Ngày cập nhật gần đây" },
-        { key: "price", label: "Giá" },
+        {
+          key: "price",
+          label: "Giá",
+          formatter: (value) => {
+            return Number(value).toLocaleString();
+          },
+        },
         {
           key: "status",
           label: "Trạng thái",
