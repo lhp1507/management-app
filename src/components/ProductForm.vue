@@ -1,94 +1,123 @@
 <template>
   <div class="form-container">
+    <!-- Component -->
     <b-form @submit="onSubmit" v-if="show">
-      <!-- Tên sản phẩm - productname -->
-      <b-form-group
-        id="input-group-productname"
-        label="Tên sản phẩm"
-        label-for="input-productname"
-        class="text-success font-weight-bold col-lg-6 d-inline-block pl-0"
-      >
-        <b-form-input
-          id="input-productname"
-          v-model="form.productname"
-          placeholder="Nhập tên sản phẩm"
-          autocomplete="off"
-          :disabled="isEdit == 'true'"
-          required
-        ></b-form-input>
-        <div
-          v-if="isExisted && isEdit == 'false'"
-          class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+      <div class="wrap-input-product">
+        <!-- productname -->
+        <v-form-input
+          :id="'productname'"
+          :label="'Tên sản phẩm'"
+          :labelFor="'productname'"
+          class="text-success font-weight-bold v-form-input"
         >
-          Tên sản phẩm này đã được sử dụng.
-        </div>
-      </b-form-group>
-      <!-- Giá sản phẩm - productprice -->
-      <b-form-group
-        id="input-group-productprice"
-        label="Giá sản phẩm"
-        label-for="input-productprice"
-        class="text-success font-weight-bold col-lg-6 d-inline-block pr-0 align-top"
-      >
-        <b-form-input
-          id="input-productprice"
-          v-model.number="form.price"
-          placeholder="Nhập giá sản phẩm"
-          autocomplete="off"
-          required
-        ></b-form-input>
-      </b-form-group>
+          <template slot="productname">
+            <b-form-input
+              id="productname"
+              v-model="form.productname"
+              placeholder="Nhập tên sản phẩm"
+              autocomplete="off"
+              :disabled="isEdit == 'true'"
+            ></b-form-input>
+            <p
+              v-if="isExisted && isEdit == 'false'"
+              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+            >
+              Tên sản phẩm này đã được sử dụng.
+            </p>
 
-      <b-form-group id="input-group-status">
-        <b-form-checkbox
-          id="checkbox-status"
-          v-model="form.status"
-          name="checkbox-status"
-          value="1"
-          unchecked-value="0"
-        >
-          Trạng thái
-        </b-form-checkbox>
-      </b-form-group>
+            <p
+              v-if="error === 1 && !form.productname"
+              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+            >
+              Trường này không được để trống.
+            </p>
+          </template>
+        </v-form-input>
 
-      <div class="button-group text-right">
-        <b-button
-          v-if="isEdit == 'false'"
-          type="submit"
-          variant="success"
-          style="width: 100px"
-          class="mr-3"
-          >Tạo</b-button
+        <!-- price -->
+        <v-form-input
+          :id="'price'"
+          :label="'Giá sản phẩm'"
+          :labelFor="'price'"
+          class="text-success font-weight-bold v-form-input"
         >
-        <b-button
-          v-else
-          type="submit"
-          variant="success"
-          style="width: 100px"
-          class="mr-3"
-          >Cập nhật</b-button
-        >
-        <b-button
-          type="button"
-          variant="success"
-          @click.prevent="onCancel"
-          style="width: 100px"
-          >Hủy</b-button
-        >
+          <template slot="price">
+            <b-form-input
+              id="price"
+              v-model="form.price"
+              placeholder="Nhập giá sản phẩm"
+              autocomplete="off"
+            ></b-form-input>
+            <p
+              v-if="error === 1 && !form.price"
+              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+            >
+              Trường này không được để trống.
+            </p>
+          </template>
+        </v-form-input>
       </div>
+
+      <div class="wrap-input-checkbox">
+        <!-- status -->
+        <v-form-input :id="'status'" :labelFor="'status'">
+          <template slot="status">
+            <b-form-checkbox v-model="form.status" value="1" unchecked-value="0"
+              >Trạng thái</b-form-checkbox
+            >
+          </template>
+        </v-form-input>
+      </div>
+
+      <!-- Buttons -->
+      <div class="wrap-button">
+        <v-form-button
+          v-if="isEdit == 'false'"
+          :variant="'success'"
+          :typeBtn="'submit'"
+          :onClick="onSubmit"
+          class="v-button"
+        >
+          Tạo
+        </v-form-button>
+        <v-form-button
+          v-else
+          :variant="'success'"
+          :typeBtn="'submit'"
+          :onClick="onSubmit"
+          class="v-button"
+        >
+          Cập nhật
+        </v-form-button>
+        <v-form-button
+          :onClick="onCancel"
+          :variant="'success'"
+          :typeBtn="'button'"
+          class="v-button"
+        >
+          Hủy
+        </v-form-button>
+      </div>
+
+      <!-- Component -->
     </b-form>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from "vuex";
+import FormInput from "./FormInput.vue";
+import FormButton from "./FormButton.vue";
 
 export default {
+  components: { "v-form-input": FormInput, "v-form-button": FormButton },
   data() {
     return {
-      form: {},
+      form: { productname: "", price: null, status: 0 },
+
       show: true,
       isExisted: false,
+      error: 0,
     };
   },
 
@@ -105,22 +134,12 @@ export default {
   },
   beforeCreate() {
     this.isEdit = sessionStorage.getItem("isEdit");
-    // console.log("beforeCreate", this.isEdit);
   },
 
   created() {
-    // console.log(
-    //   "created",
-    //   this.isEdit,
-    //   this.getEditingProductByID,
-    //   this.getEditingProductByID.id
-    // );
-
     if (this.isEdit == "true") {
-      this.form = this.getEditingProductByID;
-      // this.form = Object.assign({}, this.getEditingProductByID);
+      this.form = Object.assign({}, this.getEditingProductByID);
     }
-    // console.log("form", this.form, this.form.id);
   },
 
   watch: {
@@ -150,27 +169,30 @@ export default {
         this.isExisted = false;
       } else this.isExisted = true;
 
-      if (this.isEdit == "true") {
-        // console.log(this.isEdit, "Edit");
-        this.setEditingProduct({
-          index: this.editingProductIndex,
-          product: this.form,
-        });
-        this.$router.push("/product");
-      } else if (this.isExisted === false) {
-        // console.log(this.getIsEdit, "Create");
-        this.addNewOneToProducts({
-          name: this.form.productname,
-          price: this.form.price,
-          status: this.form.status,
-        });
-        this.$router.push("/product");
-      }
+      if (!this.form.productname || !this.form.price) {
+        this.error = 1;
+      } else this.error = 0;
 
-      this.setEditStateToFalse();
+      if (this.error == 0) {
+        if (this.isEdit == "true") {
+          this.setEditingProduct({
+            index: this.editingProductIndex,
+            product: this.form,
+          });
+          this.$router.push("/product");
+        } else if (this.isExisted === false) {
+          this.addNewOneToProducts({
+            name: this.form.productname,
+            price: this.form.price,
+            status: this.form.status,
+          });
+          this.$router.push("/product");
+        }
+
+        this.setEditStateToFalse();
+      }
     },
     onCancel() {
-      // console.log("cancel clicked.");
       this.setEditStateToFalse();
       this.$router.back();
     },
@@ -181,5 +203,27 @@ export default {
 <style lang="scss" scoped>
 .form-container {
   padding: 1rem;
+
+  .wrap-input-product {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .v-form-input {
+      flex: 0 0 auto;
+      width: 49%;
+    }
+  }
+  .wrap-input-checkbox {
+    display: block;
+  }
+  .wrap-button {
+    display: flex;
+    justify-content: flex-end;
+
+    .v-button {
+      margin-left: 1rem;
+    }
+  }
 }
 </style>
