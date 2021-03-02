@@ -400,22 +400,29 @@ export default new Vuex.Store({
       commit("clearData");
     },
 
-    /** Product - handleEdit || handleCreate **/
+    /** Product - handleEdit || handleDelete **/
     findEditingProduct({ commit }, editingProduct) {
-      var IndexOfEditingProduct = this.state.products.findIndex(
+      let IndexOfEditingProduct = this.state.products.findIndex(
         (product) => editingProduct.productname == product.productname
       );
-      var payload = { index: IndexOfEditingProduct, product: editingProduct };
+      let payload = { index: IndexOfEditingProduct, product: editingProduct };
       commit("setEditingProduct", payload);
     },
 
-    /** User - handleEdit || handleCreate **/
+    /** User - handleEdit || handleDelete **/
     findEditingUser({ commit }, editingUser) {
-      var IndexOfEditingUser = this.state.users.findIndex(
+      let IndexOfEditingUser = this.state.users.findIndex(
         (user) => editingUser.username == user.username
       );
-      var payload = { index: IndexOfEditingUser, user: editingUser };
+      let payload = { index: IndexOfEditingUser, user: editingUser };
       commit("setEditingUser", payload);
+    },
+
+    deleteUser({ commit }, currentUser) {
+      let IndexOfDeletingUser = this.state.users.findIndex(
+        (user) => currentUser.id == user.id
+      );
+      commit("deleteSelectedUser", IndexOfDeletingUser);
     },
   },
   mutations: {
@@ -475,7 +482,7 @@ export default new Vuex.Store({
       });
     },
 
-    /** User - handleEdit || handleCreate **/
+    /** User - handleEdit || handleCreate || handleDelete **/
     // Edit
     setEditingUser(state, payload) {
       state.editingUserIndex = payload.index;
@@ -496,6 +503,10 @@ export default new Vuex.Store({
         datecreated: "17/02/2021, 0:25 AM",
         role: "user",
       });
+    },
+    // Delete
+    deleteSelectedUser(state, IndexOfDeletingUser) {
+      state.users.splice(IndexOfDeletingUser, 1);
     },
   },
   getters: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row no-gutters class="user-table mt-3" ref="btable">
+    <b-row no-gutters class="user-table mt-3">
       <b-table
         :items="getList"
         :fields="fields"
@@ -12,6 +12,7 @@
         stacked="md"
         show-empty
         head-variant="light"
+        ref="table"
       >
         <template
           v-for="slotName in Object.keys($scopedSlots)"

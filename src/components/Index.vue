@@ -76,11 +76,11 @@ import { mapActions } from "vuex";
 export default {
   computed: {
     username() {
-      var loggedUser = JSON.parse(sessionStorage.getItem("LoggedUser"));
+      let loggedUser = JSON.parse(sessionStorage.getItem("LoggedUser"));
       return loggedUser.username;
     },
     isAdmin() {
-      var isadmin = sessionStorage.getItem("IsAdmin");
+      let isadmin = sessionStorage.getItem("IsAdmin");
       return isadmin;
     },
   },

@@ -145,7 +145,7 @@ export default {
   computed: {
     ...mapGetters(["getProducts"]),
     isAdmin() {
-      var isadmin = sessionStorage.getItem("IsAdmin");
+      let isadmin = sessionStorage.getItem("IsAdmin");
       return isadmin;
     },
     visibleFields() {

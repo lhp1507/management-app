@@ -83,11 +83,11 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  var requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  var requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
-  var IsAdmin = sessionStorage.getItem("IsAdmin");
-  var currentUser = JSON.parse(sessionStorage.getItem("LoggedUser"));
-  var prevPath = sessionStorage.getItem("SSPrevPath");
+  let requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  let requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
+  let IsAdmin = sessionStorage.getItem("IsAdmin");
+  let currentUser = JSON.parse(sessionStorage.getItem("LoggedUser"));
+  let prevPath = sessionStorage.getItem("SSPrevPath");
 
   if (requiresAuth && !currentUser) {
     // TH chưa chưa đăng nhập và route đó có yêu cầu Auth thì sẽ chuyển sang page login, sau khi đăng nhập thành công thì sẽ chuyển đến path đang query.
@@ -125,7 +125,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   // to and from are both route objects.
 
-  var isLoggedIn = sessionStorage.getItem("UserIsLoggedIn");
+  let isLoggedIn = sessionStorage.getItem("UserIsLoggedIn");
   if ((to.path != "/login" || to.path != "/") && isLoggedIn == "true") {
     sessionStorage.setItem("SSPrevPath", router.currentRoute.path);
   }

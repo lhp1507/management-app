@@ -110,10 +110,10 @@ export default {
     ...mapActions(["login"]),
 
     handleLogin() {
-      var username = this.username;
-      var password = this.password;
+      let username = this.username;
+      let password = this.password;
 
-      var RetiredEmployee = this.ListOfRetiredEmployees.findIndex(
+      let RetiredEmployee = this.ListOfRetiredEmployees.findIndex(
         (u) => u.username == username && u.password == password
       );
 

@@ -44,6 +44,10 @@
       </b-col>
     </b-row>
 
+    <b-alert v-if="error === 1" show variant="danger" class="mt-3 text-center">
+      Không thể xóa tài khoản admin.
+    </b-alert>
+
     <v-list-main
       :getList="getUsers"
       :fields="visibleFields"
@@ -138,6 +142,7 @@ export default {
       currentPage: 1,
       filter: "",
       filterOn: [],
+      error: 0,
     };
   },
 
@@ -145,7 +150,7 @@ export default {
     ...mapGetters(["getUsers"]),
     ...mapState(["users"]),
     isAdmin() {
-      var isadmin = sessionStorage.getItem("IsAdmin");
+      let isadmin = sessionStorage.getItem("IsAdmin");
       return isadmin;
     },
     visibleFields() {
@@ -173,7 +178,7 @@ export default {
       "setEditStateToFalse",
       "setEditingUser",
     ]),
-    ...mapActions(["findEditingUser"]),
+    ...mapActions(["findEditingUser", "deleteUser"]),
 
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
@@ -207,8 +212,13 @@ export default {
     viewCurrent(editingUser) {
       alert(JSON.stringify(editingUser));
     },
-    deleteCurrent(editingUser) {
-      alert("delete " + editingUser.username);
+    deleteCurrent(currentUser) {
+      if (currentUser.role == "admin") this.error = 1;
+      else this.error = 0;
+
+      if (this.error === 0) {
+        this.deleteUser(currentUser);
+      }
     },
   },
 };
