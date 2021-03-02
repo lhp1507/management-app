@@ -205,11 +205,11 @@ export default {
       });
     },
 
-    viewCurrent(editingUser) {
-      alert(JSON.stringify(editingUser));
+    viewCurrent(editingProduct) {
+      alert(JSON.stringify(editingProduct));
     },
-    deleteCurrent(editingUser) {
-      alert("delete " + editingUser.username);
+    deleteCurrent(editingProduct) {
+      alert("delete " + editingProduct.productname);
     },
   },
 };

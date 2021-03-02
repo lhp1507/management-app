@@ -2,56 +2,61 @@
   <div class="form-container">
     <!-- Component -->
     <b-form @submit="onSubmit" v-if="show">
-      <!-- username -->
-      <div class="group-input">
+      <div class="wrap-input-username">
+        <!-- username -->
         <v-form-input
           :id="'username'"
           :label="'Tên đăng nhập'"
           :labelFor="'username'"
-          class="text-success font-weight-bold"
+          class="text-success font-weight-bold v-form-input"
         >
           <template slot="username">
             <b-form-input
               id="username"
-              v-model="$v.form.username.$model"
-              @input="$v.form.username.$touch()"
+              v-model="form.username"
               placeholder="Nhập tên đăng nhập"
               autocomplete="off"
               :disabled="isEdit == 'true'"
             ></b-form-input>
-            <div
+            <p
               v-if="isExisted && isEdit == 'false'"
               class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
             >
               Tên đăng nhập này đã được sử dụng.
-            </div>
-            <div
-              class="error"
-              v-if="!$v.form.username.required && $v.blur()"
-              :class="{ 'form-group--error': $v.form.username.$error }"
+            </p>
+
+            <p
+              v-if="error === 1 && !form.username"
+              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
             >
-              Trường này không được bỏ trống.
-            </div>
+              Trường này không được để trống.
+            </p>
           </template>
         </v-form-input>
+      </div>
 
+      <div class="wrap-input-fullname">
         <!-- firstname -->
         <v-form-input
           :id="'firstname'"
           :label="'Tên nhân viên'"
           :labelFor="'firstname'"
-          class="text-success font-weight-bold"
+          class="text-success font-weight-bold v-form-input"
         >
           <template slot="firstname">
             <b-form-input
               id="firstname"
-              v-model="$v.form.fullname.firstname.$model"
+              v-model="form.fullname.firstname"
               placeholder="Nhập tên"
               autocomplete="off"
             ></b-form-input>
-            <div class="error" v-if="!$v.form.fullname.firstname.required">
-              Trường này không được bỏ trống.
-            </div>
+
+            <p
+              v-if="error === 1 && !form.fullname.firstname"
+              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+            >
+              Trường này không được để trống.
+            </p>
           </template>
         </v-form-input>
 
@@ -60,21 +65,27 @@
           :id="'lastname'"
           :label="'Họ nhân viên'"
           :labelFor="'lastname'"
-          class="text-success font-weight-bold"
+          class="text-success font-weight-bold v-form-input"
         >
           <template slot="lastname">
             <b-form-input
               id="lastname"
-              v-model="$v.form.fullname.lastname.$model"
+              v-model="form.fullname.lastname"
               placeholder="Nhập họ"
               autocomplete="off"
             ></b-form-input>
-            <div class="error" v-if="!$v.form.fullname.lastname.required">
-              Trường này không được bỏ trống.
-            </div>
+
+            <p
+              v-if="error === 1 && !form.fullname.lastname"
+              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+            >
+              Trường này không được để trống.
+            </p>
           </template>
         </v-form-input>
+      </div>
 
+      <div class="wrap-input-checkbox">
         <!-- status -->
         <v-form-input :id="'status'" :labelFor="'status'">
           <template slot="status">
@@ -86,12 +97,13 @@
       </div>
 
       <!-- Buttons -->
-      <div class="group-button">
+      <div class="wrap-button">
         <v-form-button
           v-if="isEdit == 'false'"
           :variant="'success'"
           :typeBtn="'submit'"
           :onClick="onSubmit"
+          class="v-button"
         >
           Tạo
         </v-form-button>
@@ -100,6 +112,7 @@
           :variant="'success'"
           :typeBtn="'submit'"
           :onClick="onSubmit"
+          class="v-button"
         >
           Cập nhật
         </v-form-button>
@@ -107,6 +120,7 @@
           :onClick="onCancel"
           :variant="'success'"
           :typeBtn="'button'"
+          class="v-button"
         >
           Hủy
         </v-form-button>
@@ -114,12 +128,9 @@
 
       <!-- Component -->
     </b-form>
-
-    <b-button @click="logInfo" variant="primary">Info</b-button>
   </div>
 </template>
 <script>
-import { required } from "vuelidate/lib/validators";
 import { mapMutations, mapState } from "vuex";
 import FormInput from "./FormInput.vue";
 import FormButton from "./FormButton.vue";
@@ -136,16 +147,8 @@ export default {
 
       show: true,
       isExisted: false,
+      error: 0,
     };
-  },
-  validations: {
-    form: {
-      username: { required },
-      fullname: {
-        firstname: { required },
-        lastname: { required },
-      },
-    },
   },
 
   computed: {
@@ -187,17 +190,23 @@ export default {
 
     onSubmit(e) {
       e.preventDefault();
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        if (
-          this.users.findIndex((user) => user.username == this.form.username) ==
-          -1
-        ) {
-          this.isExisted = false;
-        } else this.isExisted = true;
 
-        console.log(JSON.stringify(this.form), this.isExisted, this.isEdit);
+      if (
+        this.users.findIndex((user) => user.username == this.form.username) ==
+        -1
+      ) {
+        this.isExisted = false;
+      } else this.isExisted = true;
 
+      if (
+        !this.form.username ||
+        !this.form.fullname.firstname ||
+        !this.form.fullname.lastname
+      ) {
+        this.error = 1;
+      } else this.error = 0;
+
+      if (this.error == 0) {
         if (this.isEdit == "true") {
           this.setEditingUser({
             index: this.editingUserIndex,
@@ -222,11 +231,6 @@ export default {
       this.setEditStateToFalse();
       this.$router.back();
     },
-
-    //
-    logInfo() {
-      console.log(JSON.stringify(this.form));
-    },
   },
 };
 </script>
@@ -235,22 +239,32 @@ export default {
 .form-container {
   padding: 1rem;
 
-  .group-input {
-    display: flex;
-
-    #username {
-      flex-grow: 3;
-    }
-    #firstname {
-      flex-grow: 1;
-    }
-    #lastname {
-      flex-grow: 1;
+  .wrap-input-username {
+    display: block;
+    .v-form-input {
+      width: 49%;
     }
   }
-
-  .group-button {
+  .wrap-input-fullname {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .v-form-input {
+      flex: 0 0 auto;
+      width: 49%;
+    }
+  }
+  .wrap-input-checkbox {
+    display: block;
+  }
+  .wrap-button {
+    display: flex;
+    justify-content: flex-end;
+
+    .v-button {
+      margin-left: 1rem;
+    }
   }
 }
 </style>
