@@ -127,7 +127,7 @@ export default {
           key: "status",
           label: "Trạng thái",
           formatter: (value) => {
-            if (value === 1) return "Đang làm";
+            if (Number(value) === 1) return "Đang làm";
             else return "Nghỉ việc";
           },
         },

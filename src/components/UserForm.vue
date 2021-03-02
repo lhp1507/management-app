@@ -1,165 +1,131 @@
 <template>
   <div class="form-container">
     <!-- Component -->
-    <!-- username -->
-    <v-form
-      id="username"
-      label="Tên đăng nhập"
-      class="text-success font-weight-bold col-6 d-block pl-0"
-    >
-      <template slot="username">
-        <b-form-input
-          v-model="form.username"
-          placeholder="Nhập tên đăng nhập"
-          autocomplete="off"
-          required
-        ></b-form-input>
-      </template>
-    </v-form>
-    <!-- firstname -->
-    <v-form
-      id="firstname"
-      label="Tên nhân viên"
-      class="text-success font-weight-bold col-lg-6 d-block pl-0"
-    >
-      <template slot="firstname">
-        <b-form-input
-          v-model="form.fullname.firstname"
-          placeholder="Nhập tên"
-          autocomplete="off"
-          required
-        ></b-form-input>
-      </template>
-    </v-form>
-
-    <!-- lastname -->
-    <v-form
-      id="lastname"
-      label="Họ nhân viên"
-      class="text-success font-weight-bold col-lg-6 d-block pl-0"
-    >
-      <template slot="lastname">
-        <b-form-input
-          v-model="form.fullname.lastname"
-          placeholder="Nhập họ"
-          autocomplete="off"
-          required
-        ></b-form-input>
-      </template>
-    </v-form>
-
-    <!-- status -->
-    <v-form id="status">
-      <template slot="status">
-        <b-form-checkbox v-model="form.status" value="1" unchecked-value="0"
-          >Trạng thái</b-form-checkbox
+    <b-form @submit="onSubmit" v-if="show">
+      <!-- username -->
+      <div class="group-input">
+        <v-form-input
+          :id="'username'"
+          :label="'Tên đăng nhập'"
+          :labelFor="'username'"
+          class="text-success font-weight-bold"
         >
-      </template>
-    </v-form>
+          <template slot="username">
+            <b-form-input
+              id="username"
+              v-model="$v.form.username.$model"
+              @input="$v.form.username.$touch()"
+              placeholder="Nhập tên đăng nhập"
+              autocomplete="off"
+              :disabled="isEdit == 'true'"
+            ></b-form-input>
+            <div
+              v-if="isExisted && isEdit == 'false'"
+              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+            >
+              Tên đăng nhập này đã được sử dụng.
+            </div>
+            <div
+              class="error"
+              v-if="!$v.form.username.required && $v.blur()"
+              :class="{ 'form-group--error': $v.form.username.$error }"
+            >
+              Trường này không được bỏ trống.
+            </div>
+          </template>
+        </v-form-input>
 
-    <!-- Component -->
-
-    <b-button @click="showInfo" variant="primary">Info</b-button>
-
-    <!-- <b-form @submit="onSubmit" v-if="show">
-      <b-form-group
-        id="input-group-username"
-        label="Tên đăng nhập"
-        label-for="input-username"
-        class="text-success font-weight-bold col-lg-6 d-block pl-0"
-      >
-        <b-form-input
-          id="input-username"
-          v-model="form.username"
-          placeholder="Nhập tên đăng nhập"
-          autocomplete="off"
-          :disabled="isEdit == 'true'"
-          required
-        ></b-form-input>
-        <div
-          v-if="isExisted && isEdit == 'false'"
-          class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
+        <!-- firstname -->
+        <v-form-input
+          :id="'firstname'"
+          :label="'Tên nhân viên'"
+          :labelFor="'firstname'"
+          class="text-success font-weight-bold"
         >
-          Tên đăng nhập này đã được sử dụng.
-        </div>
-      </b-form-group>
+          <template slot="firstname">
+            <b-form-input
+              id="firstname"
+              v-model="$v.form.fullname.firstname.$model"
+              placeholder="Nhập tên"
+              autocomplete="off"
+            ></b-form-input>
+            <div class="error" v-if="!$v.form.fullname.firstname.required">
+              Trường này không được bỏ trống.
+            </div>
+          </template>
+        </v-form-input>
 
-      <b-form-group
-        id="input-group-firstname"
-        label="Tên nhân viên"
-        label-for="input-firstname"
-        class="text-success font-weight-bold col-lg-6 d-inline-block pl-0"
-      >
-        <b-form-input
-          id="input-firstname"
-          v-model="form.fullname.firstname"
-          placeholder="Nhập tên"
-          autocomplete="off"
-          required
-        ></b-form-input>
-      </b-form-group>
+        <!-- lastname -->
+        <v-form-input
+          :id="'lastname'"
+          :label="'Họ nhân viên'"
+          :labelFor="'lastname'"
+          class="text-success font-weight-bold"
+        >
+          <template slot="lastname">
+            <b-form-input
+              id="lastname"
+              v-model="$v.form.fullname.lastname.$model"
+              placeholder="Nhập họ"
+              autocomplete="off"
+            ></b-form-input>
+            <div class="error" v-if="!$v.form.fullname.lastname.required">
+              Trường này không được bỏ trống.
+            </div>
+          </template>
+        </v-form-input>
 
-      <b-form-group
-        id="input-group-lastname"
-        label="Họ nhân viên"
-        label-for="input-lastname"
-        class="text-success font-weight-bold col-lg-6 d-inline-block pr-0"
-      >
-        <b-form-input
-          id="input-lastname"
-          v-model="form.fullname.lastname"
-          placeholder="Nhập họ"
-          autocomplete="off"
-          required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-status">
-        <b-form-checkbox
-          id="checkbox-status"
-          v-model="form.status"
-          name="checkbox-status"
-          value="1"
-          unchecked-value="0"
-        >
-          Trạng thái
-        </b-form-checkbox>
-      </b-form-group>
-
-      <div class="button-group text-right">
-        <b-button
-          v-if="isEdit == 'false'"
-          type="submit"
-          variant="success"
-          style="width: 100px"
-          class="mr-3"
-          >Tạo</b-button
-        >
-        <b-button
-          v-else
-          type="submit"
-          variant="success"
-          style="width: 100px"
-          class="mr-3"
-          >Cập nhật</b-button
-        >
-        <b-button
-          type="button"
-          variant="success"
-          @click.prevent="onCancel"
-          style="width: 100px"
-          >Hủy</b-button
-        >
+        <!-- status -->
+        <v-form-input :id="'status'" :labelFor="'status'">
+          <template slot="status">
+            <b-form-checkbox v-model="form.status" value="1" unchecked-value="0"
+              >Trạng thái</b-form-checkbox
+            >
+          </template>
+        </v-form-input>
       </div>
-    </b-form> -->
+
+      <!-- Buttons -->
+      <div class="group-button">
+        <v-form-button
+          v-if="isEdit == 'false'"
+          :variant="'success'"
+          :typeBtn="'submit'"
+          :onClick="onSubmit"
+        >
+          Tạo
+        </v-form-button>
+        <v-form-button
+          v-else
+          :variant="'success'"
+          :typeBtn="'submit'"
+          :onClick="onSubmit"
+        >
+          Cập nhật
+        </v-form-button>
+        <v-form-button
+          :onClick="onCancel"
+          :variant="'success'"
+          :typeBtn="'button'"
+        >
+          Hủy
+        </v-form-button>
+      </div>
+
+      <!-- Component -->
+    </b-form>
+
+    <b-button @click="logInfo" variant="primary">Info</b-button>
   </div>
 </template>
 <script>
+import { required } from "vuelidate/lib/validators";
 import { mapMutations, mapState } from "vuex";
-import Form from "./Form.vue";
+import FormInput from "./FormInput.vue";
+import FormButton from "./FormButton.vue";
 
 export default {
-  components: { "v-form": Form },
+  components: { "v-form-input": FormInput, "v-form-button": FormButton },
   data() {
     return {
       form: {
@@ -167,16 +133,21 @@ export default {
         username: "",
         status: 0,
       },
+
       show: true,
       isExisted: false,
-      //
-      // users: {
-      //   username: { id: "username", label: "Tên đăng nhập" },
-      //   firstname: { id: "firstname", label: "Tên nhân viên" },
-      //   lastname: { id: "lastname", label: "Họ nhân viên" },
-      // },
     };
   },
+  validations: {
+    form: {
+      username: { required },
+      fullname: {
+        firstname: { required },
+        lastname: { required },
+      },
+    },
+  },
+
   computed: {
     ...mapState(["editingUserIndex", "users"]),
 
@@ -190,23 +161,12 @@ export default {
   },
   beforeCreate() {
     this.isEdit = sessionStorage.getItem("isEdit");
-    // console.log("beforeCreate", this.isEdit);
   },
 
   created() {
-    // console.log(
-    //   "created",
-    //   this.isEdit,
-    //   this.getEditingUserByID,
-    //   this.getEditingUserByID.id
-    // );
     if (this.isEdit == "true") {
-      // this.form = this.getEditingUserByID;
       this.form = Object.assign({}, this.getEditingUserByID);
     }
-    // console.log("form");
-    // console.log(JSON.stringify(this.form));
-    // console.log(this.form.id);
   },
 
   watch: {
@@ -216,13 +176,6 @@ export default {
         sessionStorage.setItem("UserForm", JSON.stringify(this.form));
       }
     },
-
-    // getEditingUser(newData) {
-    //   if (this.isEdit == 'true') {
-    //     this.form = newData;
-    //     sessionStorage.setItem("UserForm", JSON.stringify(this.form));
-    //   }
-    // },
   },
 
   methods: {
@@ -234,33 +187,35 @@ export default {
 
     onSubmit(e) {
       e.preventDefault();
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        if (
+          this.users.findIndex((user) => user.username == this.form.username) ==
+          -1
+        ) {
+          this.isExisted = false;
+        } else this.isExisted = true;
 
-      if (
-        this.users.findIndex((user) => user.username == this.form.username) ==
-        -1
-      ) {
-        this.isExisted = false;
-      } else this.isExisted = true;
+        console.log(JSON.stringify(this.form), this.isExisted, this.isEdit);
 
-      if (this.isEdit == "true") {
-        // console.log(this.isEdit, "Edit");
-        this.setEditingUser({
-          index: this.editingUserIndex,
-          user: this.form,
-        });
-        this.$router.push("/user");
-      } else if (this.isExisted === false) {
-        // console.log(this.isEdit, "Create");
-        this.addNewOneToUsers({
-          firstname: this.form.fullname.firstname,
-          lastname: this.form.fullname.lastname,
-          username: this.form.username,
-          status: this.form.status,
-        });
-        this.$router.push("/user");
+        if (this.isEdit == "true") {
+          this.setEditingUser({
+            index: this.editingUserIndex,
+            user: this.form,
+          });
+          this.$router.push("/user");
+        } else if (this.isExisted === false) {
+          this.addNewOneToUsers({
+            firstname: this.form.fullname.firstname,
+            lastname: this.form.fullname.lastname,
+            username: this.form.username,
+            status: this.form.status,
+          });
+          this.$router.push("/user");
+        }
+
+        this.setEditStateToFalse();
       }
-
-      this.setEditStateToFalse();
     },
 
     onCancel() {
@@ -269,8 +224,8 @@ export default {
     },
 
     //
-    showInfo() {
-      alert(JSON.stringify(this.form));
+    logInfo() {
+      console.log(JSON.stringify(this.form));
     },
   },
 };
@@ -279,5 +234,23 @@ export default {
 <style lang="scss" scoped>
 .form-container {
   padding: 1rem;
+
+  .group-input {
+    display: flex;
+
+    #username {
+      flex-grow: 3;
+    }
+    #firstname {
+      flex-grow: 1;
+    }
+    #lastname {
+      flex-grow: 1;
+    }
+  }
+
+  .group-button {
+    display: flex;
+  }
 }
 </style>
