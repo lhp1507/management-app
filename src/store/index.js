@@ -386,7 +386,6 @@ export default new Vuex.Store({
     },
     login({ dispatch, commit }, loginData) {
       commit("findLoggedUser", loginData);
-      // console.log("loggedUser: ", state.loggedUser); //debug
       return new Promise((resolve) => {
         dispatch("compareUser").then(() => {
           commit("loginSuccess");
@@ -408,6 +407,9 @@ export default new Vuex.Store({
       let payload = { index: IndexOfEditingProduct, product: editingProduct };
       commit("setEditingProduct", payload);
     },
+    deleteProduct({ commit }, currentProduct) {
+      commit("deleteSelectedProduct", currentProduct);
+    },
 
     /** User - handleEdit || handleDelete **/
     findEditingUser({ commit }, editingUser) {
@@ -417,12 +419,8 @@ export default new Vuex.Store({
       let payload = { index: IndexOfEditingUser, user: editingUser };
       commit("setEditingUser", payload);
     },
-
     deleteUser({ commit }, currentUser) {
-      let IndexOfDeletingUser = this.state.users.findIndex(
-        (user) => currentUser.id == user.id
-      );
-      commit("deleteSelectedUser", IndexOfDeletingUser);
+      commit("deleteSelectedUser", currentUser);
     },
   },
   mutations: {
@@ -468,7 +466,6 @@ export default new Vuex.Store({
     setEditingProduct(state, payload) {
       state.editingProductIndex = payload.index;
       state.products[payload.index] = payload.product;
-      // console.log(state.products[payload.index], "pindex");
     },
     // Create
     addNewOneToProducts(state, payload) {
@@ -481,13 +478,19 @@ export default new Vuex.Store({
         datemodified: "18/02/2021, 5:02 PM",
       });
     },
+    // Delete
+    deleteSelectedProduct(state, currentProduct) {
+      let IndexOfDeletingProduct = state.products.findIndex(
+        (product) => product.id == currentProduct.id
+      );
+      state.products.splice(IndexOfDeletingProduct, 1);
+    },
 
     /** User - handleEdit || handleCreate || handleDelete **/
     // Edit
     setEditingUser(state, payload) {
       state.editingUserIndex = payload.index;
       state.users[payload.index] = payload.user;
-      // console.log(state.users[payload.index], "uindex");
     },
     // Create
     addNewOneToUsers(state, payload) {
@@ -505,7 +508,10 @@ export default new Vuex.Store({
       });
     },
     // Delete
-    deleteSelectedUser(state, IndexOfDeletingUser) {
+    deleteSelectedUser(state, currentUser) {
+      let IndexOfDeletingUser = state.users.findIndex(
+        (user) => user.id == currentUser.id
+      );
       state.users.splice(IndexOfDeletingUser, 1);
     },
   },

@@ -49,7 +49,7 @@
     </b-alert>
 
     <v-list-main
-      :getList="getUsers"
+      :items="getUsers"
       :fields="visibleFields"
       :currentPage="currentPage"
       :perPage="perPage"
@@ -102,15 +102,16 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import ListHeader from "./ListHeader.vue";
 import ListMain from "./ListMain.vue";
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   components: {
     "v-list-header": ListHeader,
     "v-list-main": ListMain,
   },
+
   data() {
     return {
       // Per page
@@ -148,11 +149,12 @@ export default {
 
   computed: {
     ...mapGetters(["getUsers"]),
-    ...mapState(["users"]),
+
     isAdmin() {
       let isadmin = sessionStorage.getItem("IsAdmin");
       return isadmin;
     },
+
     visibleFields() {
       if (this.isAdmin == "true") {
         return this.fields;
@@ -161,14 +163,19 @@ export default {
       }
     },
   },
+
   created() {
     this.fetchData();
   },
+
   mounted() {
     this.totalRows = this.getUsers.length;
   },
   watch: {
-    items: function () {
+    // items() {
+    //   this.totalRows = this.getUsers.length;
+    // },
+    getUsers() {
       this.totalRows = this.getUsers.length;
     },
   },
@@ -212,6 +219,7 @@ export default {
     viewCurrent(editingUser) {
       alert(JSON.stringify(editingUser));
     },
+
     deleteCurrent(currentUser) {
       if (currentUser.role == "admin") this.error = 1;
       else this.error = 0;

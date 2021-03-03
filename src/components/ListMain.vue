@@ -2,7 +2,7 @@
   <div>
     <b-row no-gutters class="user-table mt-3">
       <b-table
-        :items="getList"
+        :items="items"
         :fields="fields"
         :current-page="currentPage"
         :per-page="perPage"
@@ -28,7 +28,7 @@
 <script>
 export default {
   props: {
-    getList: {
+    items: {
       type: Array,
       required: true,
     },

@@ -45,7 +45,7 @@
     </b-row>
 
     <v-list-main
-      :getList="getProducts"
+      :items="getProducts"
       :fields="visibleFields"
       :currentPage="currentPage"
       :perPage="perPage"
@@ -98,9 +98,9 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import ListHeader from "./ListHeader.vue";
 import ListMain from "./ListMain.vue";
-import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -157,11 +157,6 @@ export default {
     },
   },
 
-  watch: {
-    items: function () {
-      this.totalRows = this.getProducts.length;
-    },
-  },
   created() {
     this.fetchData();
   },
@@ -170,13 +165,19 @@ export default {
     this.totalRows = this.getProducts.length;
   },
 
+  watch: {
+    getProducts() {
+      this.totalRows = this.getProducts.length;
+    },
+  },
+
   methods: {
     ...mapMutations([
       "setEditStateToTrue",
       "setEditStateToFalse",
       "setEditingProduct",
     ]),
-    ...mapActions(["findEditingProduct"]),
+    ...mapActions(["findEditingProduct", "deleteProduct"]),
 
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
@@ -194,10 +195,12 @@ export default {
         })
         .catch(() => {});
     },
+
     handleCreate() {
       this.setEditStateToFalse();
       this.$router.push({ name: "createProduct" }).catch(() => {});
     },
+
     fetchData() {
       this.setEditingProduct({
         index: this.editingProductIndex,
@@ -208,8 +211,9 @@ export default {
     viewCurrent(editingProduct) {
       alert(JSON.stringify(editingProduct));
     },
-    deleteCurrent(editingProduct) {
-      alert("delete " + editingProduct.productname);
+
+    deleteCurrent(currentProduct) {
+      this.deleteProduct(currentProduct);
     },
   },
 };
