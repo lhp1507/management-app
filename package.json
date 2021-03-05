@@ -57,5 +57,7 @@
   ],
   "include": [
     "./src/**/*"
-  ]
+  ],
+  "keywords": [],
+  "description": "TMA assignment"
 }

@@ -1,12 +1,12 @@
 <template>
   <b-container class="p-0 100 min-vh-100 bg-light" fluid>
     <b-row no-gutters class="h-100">
-      <b-col lg="2" class="col-sidebar">
+      <b-col sm="2" class="col-left">
         <b-sidebar
           visible
           no-header
           bg-variant="success"
-          class="sidebar h-100 col-lg-2 p-0"
+          class="sidebar h-100 col-sm-2 p-0"
           no-close-on-route-change
         >
           <div class="px-3 py-2">
@@ -19,7 +19,7 @@
                   class="d-block w-100 text-left text-white text-decoration-none p-0"
                 >
                   <font-awesome-icon icon="cog" style="color: white" />
-                  <span class="pl-lg-3 pr-lg-5">Cài đặt</span>
+                  <span class="pl-sm-1 pr-sm-1 pl-md-2 pr-md-4">Cài đặt</span>
                   <font-awesome-icon icon="caret-down" style="color: white" />
                 </b-button>
                 <b-collapse id="collapse-setting">
@@ -31,10 +31,10 @@
                   </b-nav>
                 </b-collapse>
               </div>
-              <div class="management">
+              <div class="management d-flex align-items-center">
                 <font-awesome-icon icon="calculator" style="color: white" />
-                <b-nav vertical class="d-inline-block">
-                  <b-nav-item>Quản lý</b-nav-item>
+                <b-nav>
+                  <b-nav-item class="pl-sm-1 pl-md-2">Quản lý</b-nav-item>
                 </b-nav>
               </div>
             </div>
@@ -42,7 +42,7 @@
         </b-sidebar>
       </b-col>
 
-      <b-col>
+      <b-col sm="10" class="col-right">
         <b-row no-gutters class="sticky-top">
           <b-navbar
             type="light"
@@ -93,7 +93,7 @@ export default {
     },
     redirectUser() {
       let isAdminInsessionStorage = sessionStorage.getItem("IsAdmin");
-      if (isAdminInsessionStorage == "true") {
+      if (isAdminInsessionStorage === "true") {
         this.$router.replace({ path: "/user" }).catch(() => {});
       } else {
         this.$router.push({ path: "/404" });
@@ -107,7 +107,7 @@ export default {
 </script>
 
 <style lang="scss">
-.col-sidebar {
+.col-left {
   .sidebar {
     .b-sidebar {
       width: 16.666667%;
@@ -125,15 +125,17 @@ export default {
   #collapse-setting {
     .nav-item {
       a {
-        margin-left: 20px;
+        margin-left: 10px;
         color: white !important;
       }
     }
   }
   .management {
     .nav-item {
-      a {
+      a.nav-link {
+        display: inline-block;
         color: white !important;
+        padding: 0;
       }
     }
   }

@@ -1,142 +1,16 @@
 <template>
   <div class="form-container">
     <!-- Component -->
-    <b-form @submit="onSubmit" v-if="show">
-      <div class="wrap-input-username">
-        <!-- username -->
-        <v-form-input
-          :id="'username'"
-          :label="'Tên đăng nhập'"
-          :labelFor="'username'"
-          class="text-success font-weight-bold v-form-input"
-        >
-          <template slot="username">
-            <b-form-input
-              id="username"
-              v-model="form.username"
-              placeholder="Nhập tên đăng nhập"
-              autocomplete="off"
-              :disabled="isEdit == 'true'"
-            ></b-form-input>
-            <p
-              v-if="isExisted && isEdit == 'false'"
-              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
-            >
-              Tên đăng nhập này đã được sử dụng.
-            </p>
-
-            <p
-              v-if="error === 1 && !form.username"
-              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
-            >
-              Trường này không được để trống.
-            </p>
-          </template>
-        </v-form-input>
-      </div>
-
-      <div class="wrap-input-fullname">
-        <!-- firstname -->
-        <v-form-input
-          :id="'firstname'"
-          :label="'Tên nhân viên'"
-          :labelFor="'firstname'"
-          class="text-success font-weight-bold v-form-input"
-        >
-          <template slot="firstname">
-            <b-form-input
-              id="firstname"
-              v-model="form.fullname.firstname"
-              placeholder="Nhập tên"
-              autocomplete="off"
-            ></b-form-input>
-
-            <p
-              v-if="error === 1 && !form.fullname.firstname"
-              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
-            >
-              Trường này không được để trống.
-            </p>
-          </template>
-        </v-form-input>
-
-        <!-- lastname -->
-        <v-form-input
-          :id="'lastname'"
-          :label="'Họ nhân viên'"
-          :labelFor="'lastname'"
-          class="text-success font-weight-bold v-form-input"
-        >
-          <template slot="lastname">
-            <b-form-input
-              id="lastname"
-              v-model="form.fullname.lastname"
-              placeholder="Nhập họ"
-              autocomplete="off"
-            ></b-form-input>
-
-            <p
-              v-if="error === 1 && !form.fullname.lastname"
-              class="text-left text-danger font-weight-normal alert-danger p-1 mt-2"
-            >
-              Trường này không được để trống.
-            </p>
-          </template>
-        </v-form-input>
-      </div>
-
-      <div class="wrap-input-checkbox">
-        <!-- status -->
-        <v-form-input :id="'status'" :labelFor="'status'">
-          <template slot="status">
-            <b-form-checkbox v-model="form.status" value="1" unchecked-value="0"
-              >Trạng thái</b-form-checkbox
-            >
-          </template>
-        </v-form-input>
-      </div>
-
-      <!-- Buttons -->
-      <div class="wrap-button">
-        <v-form-button
-          v-if="isEdit == 'false'"
-          :variant="'success'"
-          :typeBtn="'submit'"
-          :onClick="onSubmit"
-          class="v-button"
-        >
-          Tạo
-        </v-form-button>
-        <v-form-button
-          v-else
-          :variant="'success'"
-          :typeBtn="'submit'"
-          :onClick="onSubmit"
-          class="v-button"
-        >
-          Cập nhật
-        </v-form-button>
-        <v-form-button
-          :onClick="onCancel"
-          :variant="'success'"
-          :typeBtn="'button'"
-          class="v-button"
-        >
-          Hủy
-        </v-form-button>
-      </div>
-
-      <!-- Component -->
-    </b-form>
+    <BaseForm :layout="layout" />
+    <!-- Component -->
   </div>
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
-import FormInput from "./FormInput.vue";
-import FormButton from "./FormButton.vue";
+import BaseForm from "./BaseForm.vue";
 
 export default {
-  components: { "v-form-input": FormInput, "v-form-button": FormButton },
+  components: { BaseForm },
   data() {
     return {
       form: {
@@ -148,6 +22,103 @@ export default {
       show: true,
       isExisted: false,
       error: 0,
+
+      // Layout for component
+      layout: {
+        input: {
+          username: {
+            type: "text",
+            trim: true,
+            required: true,
+            ui: {
+              label: "Tên đăng nhập",
+              autocomplete: "off",
+              placeholder: "Nhập tên đăng nhập",
+              disabled: false,
+              styleObj: {},
+              classObj: {
+                "text-success": true,
+                "font-weight-bold": true,
+                "col-6": true,
+                "p-0": true,
+              },
+            },
+          },
+
+          firstName: {
+            type: "text",
+            trim: true,
+            required: true,
+            ui: {
+              label: "Tên nhân viên",
+              placeholder: "Nhập tên",
+              autocomplete: "off",
+              disabled: false,
+              styleObj: {},
+              classObj: {
+                "text-success": true,
+                "font-weight-bold": true,
+                "col-6": true,
+                "p-0": true,
+              },
+            },
+          },
+          lastName: {
+            type: "text",
+            trim: true,
+            required: true,
+            ui: {
+              label: "Họ nhân viên",
+              autocomplete: "off",
+              disabled: false,
+              placeholder: "Nhập họ",
+              styleObj: {},
+              classObj: {
+                "text-success": true,
+                "font-weight-bold": true,
+                "col-6": true,
+                "p-0": true,
+              },
+            },
+          },
+
+          status: {
+            type: "checkbox",
+            ui: {
+              msg: "Trạng thái",
+              styleObj: {},
+              classObj: {},
+            },
+            checkedValue: 1,
+            uncheckedValue: 0,
+          },
+        },
+
+        button: {
+          create: {
+            type: "submit",
+            ui: {
+              msg: "Tạo",
+              variant: "success",
+              styleObj: {
+                margin: "0 1rem 0 0",
+              },
+              classObj: {},
+            },
+            onClick: this.onSubmit,
+          },
+          edit: {
+            type: "button",
+            ui: {
+              msg: "Huỷ",
+              variant: "success",
+              styleObj: {},
+              classObj: {},
+            },
+            onClick: this.onCancel,
+          },
+        },
+      },
     };
   },
 
@@ -155,7 +126,7 @@ export default {
     ...mapState(["editingUserIndex", "users"]),
 
     getEditingUserByID() {
-      if (this.isEdit == "true") {
+      if (this.isEdit === "true") {
         return this.users.find(
           (user) => user.id === parseInt(this.$route.params.id)
         );
@@ -167,14 +138,14 @@ export default {
   },
 
   created() {
-    if (this.isEdit == "true") {
+    if (this.isEdit === "true") {
       this.form = Object.assign({}, this.getEditingUserByID);
     }
   },
 
   watch: {
     getEditingUserByID(newData) {
-      if (this.isEdit == "true") {
+      if (this.isEdit === "true") {
         this.form = newData;
         sessionStorage.setItem("UserForm", JSON.stringify(this.form));
       }
@@ -192,7 +163,7 @@ export default {
       e.preventDefault();
 
       if (
-        this.users.findIndex((user) => user.username == this.form.username) ==
+        this.users.findIndex((user) => user.username === this.form.username) ===
         -1
       ) {
         this.isExisted = false;
@@ -206,8 +177,8 @@ export default {
         this.error = 1;
       } else this.error = 0;
 
-      if (this.error == 0) {
-        if (this.isEdit == "true") {
+      if (this.error === 0) {
+        if (this.isEdit === "true") {
           this.setEditingUser({
             index: this.editingUserIndex,
             user: this.form,
@@ -238,33 +209,5 @@ export default {
 <style lang="scss" scoped>
 .form-container {
   padding: 1rem;
-
-  .wrap-input-username {
-    display: block;
-    .v-form-input {
-      width: 49%;
-    }
-  }
-  .wrap-input-fullname {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .v-form-input {
-      flex: 0 0 auto;
-      width: 49%;
-    }
-  }
-  .wrap-input-checkbox {
-    display: block;
-  }
-  .wrap-button {
-    display: flex;
-    justify-content: flex-end;
-
-    .v-button {
-      margin-left: 1rem;
-    }
-  }
 }
 </style>

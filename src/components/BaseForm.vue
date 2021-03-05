@@ -1,0 +1,62 @@
+<template>
+  <div>
+    <b-form for="(item, name) in layout" :key="name">
+      <template v-if="name == 'input'" v-bind="item">
+        <b-form-group
+          v-for="(value, key) in item"
+          :key="key"
+          :id="key"
+          :label="value.ui.label"
+          :label-for="key"
+          :style="value.ui.styleObj"
+          :class="value.ui.classObj"
+        >
+          <b-form-input
+            v-if="value.type === 'text'"
+            :id="key"
+            :placeholder="value.ui.placeholder"
+            :autocomplete="value.ui.autocomplete"
+            :disabled="value.ui.disabled"
+            :trim="value.trim"
+            :required="value.required"
+          ></b-form-input>
+
+          <b-form-checkbox
+            v-else-if="value.type === 'checkbox'"
+            :value="value.checkedValue"
+            :unchecked-value="value.uncheckedValue"
+            :style="value.ui.styleObj"
+            :class="value.ui.classObj"
+          >
+            {{ value.ui.msg }}
+          </b-form-checkbox>
+        </b-form-group>
+      </template>
+
+      <template v-else-if="name == 'button'" v-bind="item">
+        <b-button
+          v-for="(value, key) in item"
+          :key="key"
+          :type="value.type"
+          @click="value.onClick"
+          :variant="value.ui.variant"
+          :style="value.ui.styleObj"
+          :class="value.ui.classObj"
+        >
+          {{ value.ui.msg }}
+        </b-button>
+      </template>
+    </b-form>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    layout: { type: Object },
+  },
+};
+</script>
+
+<style>
+</style>

@@ -156,7 +156,7 @@ export default {
     },
 
     visibleFields() {
-      if (this.isAdmin == "true") {
+      if (this.isAdmin === "true") {
         return this.fields;
       } else {
         return this.fields.filter((field) => !field.visible);
@@ -221,7 +221,7 @@ export default {
     },
 
     deleteCurrent(currentUser) {
-      if (currentUser.role == "admin") this.error = 1;
+      if (currentUser.role === "admin") this.error = 1;
       else this.error = 0;
 
       if (this.error === 0) {

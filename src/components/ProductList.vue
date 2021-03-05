@@ -149,7 +149,7 @@ export default {
       return isadmin;
     },
     visibleFields() {
-      if (this.isAdmin == "true") {
+      if (this.isAdmin === "true") {
         return this.fields;
       } else {
         return this.fields.filter((field) => !field.visible);
