@@ -4,6 +4,7 @@ import Login from "../components/Login.vue";
 import Index from "../components/Index.vue";
 import UserList from "../components/UserList.vue";
 import UserForm from "../components/UserForm.vue";
+import UserEdit from "../components/UserEdit.vue";
 import ProductList from "../components/ProductList.vue";
 import ProductForm from "../components/ProductForm.vue";
 import PageNotFound from "../components/PageNotFound.vue";
@@ -26,7 +27,7 @@ const routes = [
       {
         path: "edit/:id",
         name: "editUser",
-        component: UserForm,
+        component: UserEdit,
         meta: { requiresAuth: true, requiresAdmin: true },
       },
       {

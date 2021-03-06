@@ -1,10 +1,15 @@
 <template>
   <div class="form-container">
     <!-- Component -->
-    <BaseForm :layout="layout" />
+
+    <b-form @submit="onSubmit" v-if="show">
+      <BaseForm :layout="layout" v-model="form" />
+    </b-form>
     <!-- Component -->
   </div>
 </template>
+
+
 <script>
 import { mapMutations, mapState } from "vuex";
 import BaseForm from "./BaseForm.vue";
@@ -14,7 +19,8 @@ export default {
   data() {
     return {
       form: {
-        fullname: { firstname: "", lastname: "" },
+        firstname: "",
+        lastname: "",
         username: "",
         status: 0,
       },
@@ -28,27 +34,27 @@ export default {
         input: {
           username: {
             type: "text",
-            trim: true,
-            required: true,
             ui: {
               label: "Tên đăng nhập",
               autocomplete: "off",
               placeholder: "Nhập tên đăng nhập",
               disabled: false,
-              styleObj: {},
+              styleObj: {
+                paddingRight: "5px",
+                paddingLeft: "0px",
+                "p-0": true,
+              },
               classObj: {
                 "text-success": true,
                 "font-weight-bold": true,
-                "col-6": true,
-                "p-0": true,
+                "col-8": true,
               },
+              cols: 12,
             },
           },
 
-          firstName: {
+          firstname: {
             type: "text",
-            trim: true,
-            required: true,
             ui: {
               label: "Tên nhân viên",
               placeholder: "Nhập tên",
@@ -58,15 +64,13 @@ export default {
               classObj: {
                 "text-success": true,
                 "font-weight-bold": true,
-                "col-6": true,
-                "p-0": true,
               },
+              cols: 6,
             },
           },
-          lastName: {
+
+          lastname: {
             type: "text",
-            trim: true,
-            required: true,
             ui: {
               label: "Họ nhân viên",
               autocomplete: "off",
@@ -76,9 +80,8 @@ export default {
               classObj: {
                 "text-success": true,
                 "font-weight-bold": true,
-                "col-6": true,
-                "p-0": true,
               },
+              cols: 6,
             },
           },
 
@@ -94,7 +97,7 @@ export default {
           },
         },
 
-        button: {
+        buttons: {
           create: {
             type: "submit",
             ui: {
@@ -107,21 +110,18 @@ export default {
             },
             onClick: this.onSubmit,
           },
-          edit: {
+          cancel: {
             type: "button",
             ui: {
               msg: "Huỷ",
               variant: "success",
               styleObj: {},
-              classObj: {},
             },
-            onClick: this.onCancel,
           },
         },
       },
     };
   },
-
   computed: {
     ...mapState(["editingUserIndex", "users"]),
 
