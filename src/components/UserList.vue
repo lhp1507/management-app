@@ -58,6 +58,9 @@
       :onFiltered="onFiltered"
       pageOptions="pageOptions"
     >
+      <template #cell(firstname)="row">
+        {{ row.item.firstname }} {{ row.item.lastname }}
+      </template>
       <!--  -->
       <template #cell(act)="data">
         <b-button
@@ -119,13 +122,7 @@ export default {
       pageOptions: [20, 50, 100],
       // Header của table
       fields: [
-        {
-          key: "fullname",
-          label: "Tên đầy đủ",
-          formatter: (value) => {
-            return `${value.firstname} ${value.lastname}`;
-          },
-        },
+        { key: "firstname", label: "Tên đầy đủ" },
         { key: "username", label: "Tên đăng nhập" },
         { key: "datecreated", label: "Ngày được tạo" },
         {

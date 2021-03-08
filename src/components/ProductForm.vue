@@ -106,11 +106,8 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import FormInput from "./FormInput.vue";
-import FormButton from "./FormButton.vue";
 
 export default {
-  components: { "v-form-input": FormInput, "v-form-button": FormButton },
   data() {
     return {
       form: { productname: "", price: null, status: 0 },
@@ -125,7 +122,7 @@ export default {
     ...mapState(["editingProductIndex", "products"]),
 
     getEditingProductByID() {
-      if (this.isEdit == "true") {
+      if (this.isEdit === "true") {
         return this.products.find(
           (product) => product.id === parseInt(this.$route.params.id)
         );
@@ -137,14 +134,14 @@ export default {
   },
 
   created() {
-    if (this.isEdit == "true") {
+    if (this.isEdit === "true") {
       this.form = Object.assign({}, this.getEditingProductByID);
     }
   },
 
   watch: {
     getEditingProductByID(newData) {
-      if (this.isEdit == "true") {
+      if (this.isEdit === "true") {
         this.form = newData;
         sessionStorage.setItem("ProductForm", JSON.stringify(this.form));
       }
@@ -163,8 +160,8 @@ export default {
 
       if (
         this.products.findIndex(
-          (product) => product.productname == this.form.productname
-        ) == -1
+          (product) => product.productname === this.form.productname
+        ) === -1
       ) {
         this.isExisted = false;
       } else this.isExisted = true;
@@ -173,8 +170,8 @@ export default {
         this.error = 1;
       } else this.error = 0;
 
-      if (this.error == 0) {
-        if (this.isEdit == "true") {
+      if (this.error === 0) {
+        if (this.isEdit === "true") {
           this.setEditingProduct({
             index: this.editingProductIndex,
             product: this.form,

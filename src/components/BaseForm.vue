@@ -1,52 +1,65 @@
 <template>
   <div>
-    <b-form for="(item, name) in layout" :key="name">
-      <template v-if="name == 'input'" v-bind="item">
-        <b-form-group
-          v-for="(value, key) in item"
-          :key="key"
-          :id="key"
-          :label="value.ui.label"
-          :label-for="key"
-          :style="value.ui.styleObj"
-          :class="value.ui.classObj"
-        >
-          <b-form-input
-            v-if="value.type === 'text'"
-            :id="key"
-            :placeholder="value.ui.placeholder"
-            :autocomplete="value.ui.autocomplete"
-            :disabled="value.ui.disabled"
-            :trim="value.trim"
-            :required="value.required"
-          ></b-form-input>
+    <div v-for="(item, name) in layout" :key="name">
+      <template v-if="name === 'input'">
+        <b-form-row>
+          <b-col
+            no-gutters
+            :cols="value.ui.cols"
+            v-for="(value, key) in item"
+            :key="key"
+          >
+            <b-form-group
+              :id="key"
+              :label="value.ui.label"
+              :label-for="key"
+              :style="value.ui.styleObj"
+              :class="value.ui.classObj"
+            >
+              <b-form-input
+                v-if="value.type === 'text' || value.type === 'number'"
+                :id="key"
+                :placeholder="value.ui.placeholder"
+                :autocomplete="value.ui.autocomplete"
+                :disabled="value.ui.disabled"
+                v-model="$attrs.value[key]"
+              ></b-form-input>
 
-          <b-form-checkbox
-            v-else-if="value.type === 'checkbox'"
-            :value="value.checkedValue"
-            :unchecked-value="value.uncheckedValue"
+              <b-form-checkbox
+                v-else-if="value.type === 'checkbox'"
+                :value="value.checkedValue"
+                :unchecked-value="value.uncheckedValue"
+                :style="value.ui.styleObj"
+                :class="value.ui.classObj"
+                v-model="$attrs.value[key]"
+              >
+                {{ value.ui.msg }}
+              </b-form-checkbox>
+
+              <!-- Validations -->
+              <!-- <div v-if="value.validate.required === true" class="error">
+                {{ value.ui.label }} không được để trống.
+              </div> -->
+            </b-form-group>
+          </b-col>
+        </b-form-row>
+      </template>
+
+      <template v-else-if="name === 'buttons'">
+        <div class="d-flex justify-content-end">
+          <b-button
+            v-for="(value, key) in item"
+            :key="key"
+            :type="value.type"
+            :variant="value.ui.variant"
             :style="value.ui.styleObj"
             :class="value.ui.classObj"
           >
             {{ value.ui.msg }}
-          </b-form-checkbox>
-        </b-form-group>
+          </b-button>
+        </div>
       </template>
-
-      <template v-else-if="name == 'button'" v-bind="item">
-        <b-button
-          v-for="(value, key) in item"
-          :key="key"
-          :type="value.type"
-          @click="value.onClick"
-          :variant="value.ui.variant"
-          :style="value.ui.styleObj"
-          :class="value.ui.classObj"
-        >
-          {{ value.ui.msg }}
-        </b-button>
-      </template>
-    </b-form>
+    </div>
   </div>
 </template>
 
@@ -59,4 +72,7 @@ export default {
 </script>
 
 <style>
+/* .error{
+  
+} */
 </style>
