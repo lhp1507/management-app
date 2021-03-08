@@ -106,11 +106,8 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import FormInput from "./FormInput.vue";
-import FormButton from "./FormButton.vue";
 
 export default {
-  components: { "v-form-input": FormInput, "v-form-button": FormButton },
   data() {
     return {
       form: { productname: "", price: null, status: 0 },

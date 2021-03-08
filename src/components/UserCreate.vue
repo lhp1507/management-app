@@ -23,8 +23,6 @@ export default {
         status: 0,
       },
 
-      isExisted: false,
-
       // Layout for component
       layout: {
         input: {
@@ -34,7 +32,7 @@ export default {
               label: "Tên đăng nhập",
               autocomplete: "off",
               placeholder: "Nhập tên đăng nhập",
-              disabled: true,
+              disabled: false,
               styleObj: {
                 paddingRight: "5px",
                 paddingLeft: "0px",
@@ -46,7 +44,10 @@ export default {
               },
               cols: 12,
             },
-            validate: {},
+            validate: {
+              required: true,
+              existed: this.isExisted,
+            },
           },
 
           firstname: {
@@ -62,6 +63,9 @@ export default {
                 "font-weight-bold": true,
               },
               cols: 6,
+            },
+            validate: {
+              required: true,
             },
           },
 
@@ -79,6 +83,9 @@ export default {
               },
               cols: 6,
             },
+            validate: {
+              required: true,
+            },
           },
 
           status: {
@@ -87,10 +94,13 @@ export default {
               msg: "Trạng thái",
               styleObj: {},
               classObj: {},
+              cols: 12,
             },
             checkedValue: 1,
             uncheckedValue: 0,
-            cols: 12,
+            validate: {
+              required: false,
+            },
           },
         },
 
@@ -123,6 +133,15 @@ export default {
 
   computed: {
     ...mapState(["users"]),
+
+    isExisted() {
+      if (
+        this.users.findIndex((user) => user.username === this.form.username) ===
+        -1
+      ) {
+        return false;
+      } else return true;
+    },
   },
 
   methods: {
@@ -139,33 +158,21 @@ export default {
         this.isExisted = false;
       } else this.isExisted = true;
 
-      if (!this.form.username || !this.form.firstname || !this.form.lastname) {
-        this.error = 1;
-      } else this.error = 0;
-
-      if (this.error === 0) {
-        if (this.isEdit === "true") {
-          this.setEditingUser({
-            index: this.editingUserIndex,
-            user: this.form,
-          });
-          this.$router.push("/user");
-        } else if (this.isExisted === false) {
-          this.addNewOneToUsers({
-            firstname: this.form.firstname,
-            lastname: this.form.lastname,
-            username: this.form.username,
-            status: this.form.status,
-          });
-          this.$router.push("/user");
-        }
-
-        this.setEditStateToFalse();
+      if (this.isExisted === false) {
+        this.addNewOneToUsers({
+          firstname: this.form.firstname,
+          lastname: this.form.lastname,
+          username: this.form.username,
+          status: this.form.status,
+        });
+        this.$router.push("/user");
       }
     },
 
-    onCancel() {
-      this.setEditStateToFalse();
+    onCancel(event) {
+      event.preventDefault();
+      console.log("cancel");
+
       this.$router.back();
     },
   },

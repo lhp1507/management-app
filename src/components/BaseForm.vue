@@ -17,7 +17,7 @@
               :class="value.ui.classObj"
             >
               <b-form-input
-                v-if="value.type === 'text'"
+                v-if="value.type === 'text' || value.type === 'number'"
                 :id="key"
                 :placeholder="value.ui.placeholder"
                 :autocomplete="value.ui.autocomplete"
@@ -35,6 +35,11 @@
               >
                 {{ value.ui.msg }}
               </b-form-checkbox>
+
+              <!-- Validations -->
+              <!-- <div v-if="value.validate.required === true" class="error">
+                {{ value.ui.label }} không được để trống.
+              </div> -->
             </b-form-group>
           </b-col>
         </b-form-row>
@@ -60,7 +65,6 @@
 
 <script>
 export default {
-  inheritAttrs: false,
   props: {
     layout: { type: Object },
   },
@@ -68,4 +72,7 @@ export default {
 </script>
 
 <style>
+/* .error{
+  
+} */
 </style>

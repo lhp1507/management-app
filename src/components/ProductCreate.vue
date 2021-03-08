@@ -16,36 +16,20 @@ export default {
   components: { BaseForm },
   data() {
     return {
-      form: {},
+      form: {
+        productname: "",
+        price: null,
+        status: 0,
+      },
 
       // Layout for component
       layout: {
         input: {
-          username: {
+          productname: {
             type: "text",
             ui: {
-              label: "Tên đăng nhập",
-              autocomplete: "off",
-              placeholder: "Nhập tên đăng nhập",
-              disabled: true,
-              styleObj: {
-                paddingRight: "5px",
-                paddingLeft: "0px",
-              },
-              classObj: {
-                "text-success": true,
-                "font-weight-bold": true,
-                "col-6": true,
-              },
-              cols: 12,
-            },
-          },
-
-          firstname: {
-            type: "text",
-            ui: {
-              label: "Tên nhân viên",
-              placeholder: "Nhập tên",
+              label: "Tên sản phẩm",
+              placeholder: "Nhập tên sản phẩm",
               autocomplete: "off",
               disabled: false,
               styleObj: {},
@@ -55,21 +39,27 @@ export default {
               },
               cols: 6,
             },
+            validate: {
+              required: true,
+            },
           },
 
-          lastname: {
-            type: "text",
+          price: {
+            type: "number",
             ui: {
-              label: "Họ nhân viên",
+              label: "Giá sản phẩm",
               autocomplete: "off",
               disabled: false,
-              placeholder: "Nhập họ",
+              placeholder: "Nhập giá sản phẩm",
               styleObj: {},
               classObj: {
                 "text-success": true,
                 "font-weight-bold": true,
               },
               cols: 6,
+            },
+            validate: {
+              required: true,
             },
           },
 
@@ -79,18 +69,21 @@ export default {
               msg: "Trạng thái",
               styleObj: {},
               classObj: {},
+              cols: 12,
             },
             checkedValue: 1,
             uncheckedValue: 0,
-            cols: 12,
+            validate: {
+              required: false,
+            },
           },
         },
 
         buttons: {
-          edit: {
+          create: {
             type: "submit",
             ui: {
-              msg: "Cập nhật",
+              msg: "Tạo",
               variant: "success",
               styleObj: {
                 margin: "0 1rem 0 0",
@@ -114,34 +107,42 @@ export default {
   },
 
   computed: {
-    ...mapState(["editingUserIndex", "users"]),
+    ...mapState(["products"]),
 
-    getEditingUserByID() {
-      return this.users.find(
-        (user) => user.id === parseInt(this.$route.params.id, 10)
-      );
+    isExisted() {
+      if (
+        this.products.findIndex(
+          (product) => product.productname === this.form.productname
+        ) === -1
+      ) {
+        return false;
+      } else return true;
     },
   },
 
-  created() {
-    this.form = Object.assign({}, this.getEditingUserByID);
-    // this.form = this.getEditingUserByID;
-  },
-
   methods: {
-    ...mapMutations(["setEditingUser"]),
+    ...mapMutations(["addNewOneToProducts"]),
 
     onSubmit(event) {
       event.preventDefault();
       console.log("submit");
 
-      this.setEditingUser({
-        index: this.editingUserIndex,
-        user: this.form,
-      });
-      console.log(this.editingUserIndex, JSON.stringify(this.form));
+      if (
+        this.products.findIndex(
+          (product) => product.productname === this.form.productname
+        ) === -1
+      ) {
+        this.isExisted = false;
+      } else this.isExisted = true;
 
-      this.$router.push("/user");
+      if (this.isExisted === false) {
+        this.addNewOneToProducts({
+          productname: this.form.productname,
+          price: this.form.price,
+          status: this.form.status,
+        });
+        this.$router.push("/product");
+      }
     },
 
     onCancel(event) {
@@ -154,7 +155,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .form-container {
   padding: 1rem;
 }
