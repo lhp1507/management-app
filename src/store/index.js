@@ -405,7 +405,7 @@ export default new Vuex.Store({
     /** Product - handleEdit || handleDelete **/
     findEditingProduct({ commit }, editingProduct) {
       let IndexOfEditingProduct = this.state.products.findIndex(
-        (product) => editingProduct.productname == product.productname
+        (product) => editingProduct.productname === product.productname
       );
       let payload = { index: IndexOfEditingProduct, product: editingProduct };
       commit("setEditingProduct", payload);
@@ -417,7 +417,7 @@ export default new Vuex.Store({
     /** User - handleEdit || handleDelete **/
     findEditingUser({ commit }, editingUser) {
       let IndexOfEditingUser = this.state.users.findIndex(
-        (user) => editingUser.username == user.username
+        (user) => editingUser.username === user.username
       );
       let payload = { index: IndexOfEditingUser, user: editingUser };
       commit("setEditingUser", payload);
@@ -484,7 +484,7 @@ export default new Vuex.Store({
     // Delete
     deleteSelectedProduct(state, currentProduct) {
       let IndexOfDeletingProduct = state.products.findIndex(
-        (product) => product.id == currentProduct.id
+        (product) => product.id === currentProduct.id
       );
       state.products.splice(IndexOfDeletingProduct, 1);
     },
@@ -513,7 +513,7 @@ export default new Vuex.Store({
     // Delete
     deleteSelectedUser(state, currentUser) {
       let IndexOfDeletingUser = state.users.findIndex(
-        (user) => user.id == currentUser.id
+        (user) => user.id === currentUser.id
       );
       state.users.splice(IndexOfDeletingUser, 1);
     }
