@@ -73,6 +73,6 @@ export default {
 
 <style>
 /* .error{
-  
+
 } */
 </style>

@@ -16,7 +16,7 @@ export default new Vuex.Store({
         password: "111111",
         datecreated: "10/02/2021, 3:52:52 PM",
         status: 1,
-        role: "user"
+        role: "user",
       },
       {
         id: 2,
@@ -26,7 +26,7 @@ export default new Vuex.Store({
         password: "111111",
         datecreated: "10/02/2021, 3:52:52 PM",
         status: 0,
-        role: "user"
+        role: "user",
       },
       {
         id: 3,
@@ -36,8 +36,8 @@ export default new Vuex.Store({
         password: "111111",
         datecreated: "10/02/2021, 3:52:52 PM",
         status: 1,
-        role: "admin"
-      }
+        role: "admin",
+      },
     ],
 
     products: [
@@ -48,7 +48,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 2,
@@ -56,7 +56,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 3,
@@ -64,7 +64,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 4,
@@ -72,7 +72,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 5,
@@ -80,7 +80,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 6,
@@ -88,7 +88,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 7,
@@ -96,7 +96,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 8,
@@ -104,7 +104,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 9,
@@ -112,7 +112,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 10,
@@ -120,7 +120,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 11,
@@ -128,7 +128,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 12,
@@ -136,7 +136,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 13,
@@ -144,7 +144,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 14,
@@ -152,7 +152,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 15,
@@ -160,7 +160,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 16,
@@ -168,7 +168,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 17,
@@ -176,7 +176,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 18,
@@ -184,7 +184,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 19,
@@ -192,7 +192,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 20,
@@ -200,7 +200,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 21,
@@ -208,7 +208,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 22,
@@ -216,7 +216,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 23,
@@ -224,7 +224,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 24,
@@ -232,7 +232,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 25,
@@ -240,7 +240,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 26,
@@ -248,7 +248,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 27,
@@ -256,7 +256,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 28,
@@ -264,7 +264,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 29,
@@ -272,7 +272,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 30,
@@ -280,7 +280,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 31,
@@ -288,7 +288,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 32,
@@ -296,7 +296,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 33,
@@ -304,7 +304,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 34,
@@ -312,7 +312,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 35,
@@ -320,7 +320,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 36,
@@ -328,7 +328,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 37,
@@ -336,7 +336,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 38,
@@ -344,7 +344,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 39,
@@ -352,7 +352,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 0
+        status: 0,
       },
       {
         id: 40,
@@ -360,7 +360,7 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
+        status: 1,
       },
       {
         id: 41,
@@ -368,8 +368,8 @@ export default new Vuex.Store({
         datecreated: "10/02/2021, 3:52:52 PM",
         datemodified: "10/02/2021, 3:52:52 PM",
         price: 10000,
-        status: 1
-      }
+        status: 1,
+      },
     ],
 
     isEdit: false,
@@ -378,7 +378,7 @@ export default new Vuex.Store({
     loggedUser: null,
 
     editingProductIndex: null,
-    editingUserIndex: null
+    editingUserIndex: null,
   },
   actions: {
     /** Login **/
@@ -424,7 +424,7 @@ export default new Vuex.Store({
     },
     deleteUser({ commit }, currentUser) {
       commit("deleteSelectedUser", currentUser);
-    }
+    },
   },
   mutations: {
     /** Login **/
@@ -474,11 +474,11 @@ export default new Vuex.Store({
     addNewOneToProducts(state, payload) {
       state.products.push({
         id: state.products.length + 1,
-        productname: payload.name,
+        productname: payload.productname,
         price: payload.price,
         status: payload.status,
         datecreated: "17/02/2021, 0:25 AM",
-        datemodified: "18/02/2021, 5:02 PM"
+        datemodified: "18/02/2021, 5:02 PM",
       });
     },
     // Delete
@@ -507,7 +507,7 @@ export default new Vuex.Store({
         status: payload.status,
         password: "111111",
         datecreated: "17/02/2021, 0:25 AM",
-        role: "user"
+        role: "user",
       });
     },
     // Delete
@@ -516,7 +516,7 @@ export default new Vuex.Store({
         (user) => user.id === currentUser.id
       );
       state.users.splice(IndexOfDeletingUser, 1);
-    }
+    },
   },
   getters: {
     getUsers(state) {
@@ -524,6 +524,6 @@ export default new Vuex.Store({
     },
     getProducts(state) {
       return state.products;
-    }
-  }
+    },
+  },
 });

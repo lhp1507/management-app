@@ -169,19 +169,12 @@ export default {
     this.totalRows = this.getUsers.length;
   },
   watch: {
-    // items() {
-    //   this.totalRows = this.getUsers.length;
-    // },
     getUsers() {
       this.totalRows = this.getUsers.length;
     },
   },
   methods: {
-    ...mapMutations([
-      "setEditStateToTrue",
-      "setEditStateToFalse",
-      "setEditingUser",
-    ]),
+    ...mapMutations(["setEditingUser"]),
     ...mapActions(["findEditingUser", "deleteUser"]),
 
     onFiltered(filteredItems) {
@@ -192,7 +185,6 @@ export default {
 
     handleEdit(editingUser) {
       this.findEditingUser(editingUser);
-      this.setEditStateToTrue();
       this.$router
         .push({
           name: "editUser",
@@ -202,7 +194,6 @@ export default {
     },
 
     handleCreate() {
-      this.setEditStateToFalse();
       this.$router.push({ name: "createUser" }).catch(() => {});
     },
 

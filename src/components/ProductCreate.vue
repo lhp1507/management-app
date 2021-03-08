@@ -22,6 +22,8 @@ export default {
         status: 0,
       },
 
+      isExisted: false,
+
       // Layout for component
       layout: {
         input: {
@@ -108,16 +110,6 @@ export default {
 
   computed: {
     ...mapState(["products"]),
-
-    isExisted() {
-      if (
-        this.products.findIndex(
-          (product) => product.productname === this.form.productname
-        ) === -1
-      ) {
-        return false;
-      } else return true;
-    },
   },
 
   methods: {

@@ -144,6 +144,7 @@ export default {
 
   computed: {
     ...mapGetters(["getProducts"]),
+
     isAdmin() {
       let isadmin = sessionStorage.getItem("IsAdmin");
       return isadmin;
@@ -172,11 +173,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations([
-      "setEditStateToTrue",
-      "setEditStateToFalse",
-      "setEditingProduct",
-    ]),
+    ...mapMutations(["setEditingProduct"]),
     ...mapActions(["findEditingProduct", "deleteProduct"]),
 
     onFiltered(filteredItems) {
@@ -187,7 +184,6 @@ export default {
 
     handleEdit(editingProduct) {
       this.findEditingProduct(editingProduct);
-      this.setEditStateToTrue();
       this.$router
         .push({
           name: "editProduct",
@@ -197,7 +193,6 @@ export default {
     },
 
     handleCreate() {
-      this.setEditStateToFalse();
       this.$router.push({ name: "createProduct" }).catch(() => {});
     },
 
