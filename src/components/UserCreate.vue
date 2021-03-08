@@ -1,14 +1,12 @@
 <template>
   <div class="form-container">
     <!-- Component -->
-
-    <b-form @submit="onSubmit" v-if="show">
+    <b-form @submit="onSubmit" @reset="onCancel">
       <BaseForm :layout="layout" v-model="form" />
     </b-form>
     <!-- Component -->
   </div>
 </template>
-
 
 <script>
 import { mapMutations, mapState } from "vuex";
@@ -25,9 +23,7 @@ export default {
         status: 0,
       },
 
-      show: true,
       isExisted: false,
-      error: 0,
 
       // Layout for component
       layout: {
@@ -38,19 +34,19 @@ export default {
               label: "Tên đăng nhập",
               autocomplete: "off",
               placeholder: "Nhập tên đăng nhập",
-              disabled: false,
+              disabled: true,
               styleObj: {
                 paddingRight: "5px",
                 paddingLeft: "0px",
-                "p-0": true,
               },
               classObj: {
                 "text-success": true,
                 "font-weight-bold": true,
-                "col-8": true,
+                "col-6": true,
               },
               cols: 12,
             },
+            validate: {},
           },
 
           firstname: {
@@ -94,6 +90,7 @@ export default {
             },
             checkedValue: 1,
             uncheckedValue: 0,
+            cols: 12,
           },
         },
 
@@ -108,59 +105,32 @@ export default {
               },
               classObj: {},
             },
-            onClick: this.onSubmit,
           },
+
           cancel: {
-            type: "button",
+            type: "reset",
             ui: {
               msg: "Huỷ",
               variant: "success",
               styleObj: {},
+              classObj: {},
             },
           },
         },
       },
     };
   },
+
   computed: {
-    ...mapState(["editingUserIndex", "users"]),
-
-    getEditingUserByID() {
-      if (this.isEdit === "true") {
-        return this.users.find(
-          (user) => user.id === parseInt(this.$route.params.id)
-        );
-      } else return {};
-    },
-  },
-  beforeCreate() {
-    this.isEdit = sessionStorage.getItem("isEdit");
-  },
-
-  created() {
-    if (this.isEdit === "true") {
-      this.form = Object.assign({}, this.getEditingUserByID);
-    }
-  },
-
-  watch: {
-    getEditingUserByID(newData) {
-      if (this.isEdit === "true") {
-        this.form = newData;
-        sessionStorage.setItem("UserForm", JSON.stringify(this.form));
-      }
-    },
+    ...mapState(["users"]),
   },
 
   methods: {
-    ...mapMutations([
-      "setEditingUser",
-      "addNewOneToUsers",
-      "setEditStateToFalse",
-    ]),
+    ...mapMutations(["addNewOneToUsers"]),
 
-    onSubmit(e) {
-      e.preventDefault();
+    onSubmit(event) {
+      event.preventDefault();
+      console.log("submit");
 
       if (
         this.users.findIndex((user) => user.username === this.form.username) ===
@@ -169,11 +139,7 @@ export default {
         this.isExisted = false;
       } else this.isExisted = true;
 
-      if (
-        !this.form.username ||
-        !this.form.fullname.firstname ||
-        !this.form.fullname.lastname
-      ) {
+      if (!this.form.username || !this.form.firstname || !this.form.lastname) {
         this.error = 1;
       } else this.error = 0;
 
@@ -186,8 +152,8 @@ export default {
           this.$router.push("/user");
         } else if (this.isExisted === false) {
           this.addNewOneToUsers({
-            firstname: this.form.fullname.firstname,
-            lastname: this.form.fullname.lastname,
+            firstname: this.form.firstname,
+            lastname: this.form.lastname,
             username: this.form.username,
             status: this.form.status,
           });

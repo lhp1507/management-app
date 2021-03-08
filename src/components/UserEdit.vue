@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
     <!-- Component -->
-    <b-form>
+    <b-form @submit="onSubmit" @reset="onCancel">
       <BaseForm :layout="layout" v-model="form" />
     </b-form>
     <!-- Component -->
@@ -82,6 +82,7 @@ export default {
             },
             checkedValue: 1,
             uncheckedValue: 0,
+            cols: 12,
           },
         },
 
@@ -99,14 +100,13 @@ export default {
           },
 
           cancel: {
-            type: "button",
+            type: "reset",
             ui: {
               msg: "Huỷ",
               variant: "success",
               styleObj: {},
               classObj: {},
             },
-            onClick: this.onCancel,
           },
         },
       },
@@ -118,14 +118,37 @@ export default {
 
     getEditingUserByID() {
       return this.users.find(
-        (user) => user.id === parseInt(this.$route.params.id)
+        (user) => user.id === parseInt(this.$route.params.id, 10)
       );
     },
   },
 
   created() {
     this.form = Object.assign({}, this.getEditingUserByID);
-    console.log(this.form);
+  },
+
+  methods: {
+    ...mapMutations(["setEditingUser"]),
+
+    onSubmit(event) {
+      event.preventDefault();
+      console.log("submit");
+
+      this.setEditingUser({
+        index: this.editingUserIndex,
+        user: this.form,
+      });
+      console.log(this.editingUserIndex, JSON.stringify(this.form));
+
+      this.$router.push("/user");
+    },
+
+    onCancel(event) {
+      event.preventDefault();
+      console.log("cancel");
+
+      this.$router.back();
+    },
   },
 };
 </script>

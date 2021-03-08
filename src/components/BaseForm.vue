@@ -22,6 +22,7 @@
                 :placeholder="value.ui.placeholder"
                 :autocomplete="value.ui.autocomplete"
                 :disabled="value.ui.disabled"
+                v-model="$attrs.value[key]"
               ></b-form-input>
 
               <b-form-checkbox
@@ -30,6 +31,7 @@
                 :unchecked-value="value.uncheckedValue"
                 :style="value.ui.styleObj"
                 :class="value.ui.classObj"
+                v-model="$attrs.value[key]"
               >
                 {{ value.ui.msg }}
               </b-form-checkbox>
@@ -47,7 +49,6 @@
             :variant="value.ui.variant"
             :style="value.ui.styleObj"
             :class="value.ui.classObj"
-            @click="value.onClick"
           >
             {{ value.ui.msg }}
           </b-button>
@@ -59,6 +60,7 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   props: {
     layout: { type: Object },
   },
