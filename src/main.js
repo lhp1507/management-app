@@ -2,8 +2,8 @@ import Vue from "vue";
 import Vuelidate from "vuelidate";
 import "./plugins/bootstrap-vue";
 import App from "./App.vue";
-import store from "./store";
-import router from "./router";
+import router from "@/router";
+import store from "@/stores";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faCog,

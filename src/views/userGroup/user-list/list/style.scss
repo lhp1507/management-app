@@ -1,0 +1,11 @@
+.list-container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.page-link {
+  color: #212529;
+}
+.page-item.active .page-link {
+  background-color: #28a745;
+  border-color: #28a745;
+}
